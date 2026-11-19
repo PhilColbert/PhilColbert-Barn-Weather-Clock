@@ -40,13 +40,13 @@ class WidgetConfigActivity : Activity() {
         root.addView(location, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         label("Latitude")
         latitude = EditText(this).apply {
-            hint = "e.g. 53.58"; inputType = 8194
+            hint = "e.g. 53.58"; inputType = 12290
             setText(prefs.getString("latitude", ""))
         }
         root.addView(latitude)
         label("Longitude")
         longitude = EditText(this).apply {
-            hint = "e.g. -2.43"; inputType = 8194
+            hint = "e.g. -2.43"; inputType = 12290
             setText(prefs.getString("longitude", ""))
         }
         root.addView(longitude)

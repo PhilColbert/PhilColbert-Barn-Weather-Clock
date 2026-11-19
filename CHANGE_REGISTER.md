@@ -54,3 +54,5 @@ Baseline: v0.7
 - Source and records fetched from GitHub for verification; compilation and physical-device location testing are not yet performed.
 
 | BWC-CHG-007 | APPROVED / IN PROGRESS | Reduce the widget's oversized clock from 48sp to 32sp; align the specification and correct the v0.6 versionCode record | v0.6 | app/src/main/res/layout/widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before implementation; source/build/device checks pending |
+
+| BWC-CHG-008 | APPROVED / IN PROGRESS | Add live daytime maximum and nighttime minimum temperatures for today and the next-day forecast; retain current conditions, wind, icons and dates | v0.7 | WeatherData.kt, BarnWeatherWidgetProvider.kt, widget_barn_weather.xml, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before edits; API parsing, source and build checks pending |

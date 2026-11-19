@@ -3,7 +3,7 @@
 ## v1.0 — 2026-11-19
 - BWC-CHG-013: Recreated the approved reference in the native widget: larger left-hand clock/date, middle current-weather and right forecast columns, dates at the top of weather columns, rounded navy panel with blue-purple border and vertical dividers.
 - High/low temperatures now appear on one line separated by `/`. Current live temperature remains beside the small Now label.
-- Wind rows show a wind glyph followed by compass direction and speed.
+- Wind rows show a wind glyph followed by compass direction and speed, with a second flag-marked row for current/forecast gusts from Open-Meteo.
 - Preserved Open-Meteo data, location configuration, one-shot fused location, refresh scheduling and background colour/transparency preferences.
 - Incremented versionName to 1.0 and versionCode to 6. CI artifact label is `barn-weather-clock-v1.0-debug`.
 - Source and records committed on feature/android-starter. CI compilation, APK inspection and physical-device visual comparison pending.

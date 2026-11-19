@@ -37,7 +37,6 @@ object WeatherData {
             val codes = daily.getJSONArray("weather_code")
             val windSpeeds = daily.getJSONArray("wind_speed_10m_max")
             val windDirections = daily.getJSONArray("wind_direction_10m_dominant")
-
             val currentWeather = DayWeather(
                 current.optString("time").take(10),
                 current.getDouble("temperature_2m").toInt(),
@@ -60,7 +59,7 @@ object WeatherData {
         } finally { connection.disconnect() }
     }
 
-    fun temperaturePairLabel(maximum: Int, minimum: Int): String = "$maximum°\n$minimum°"
+    fun temperaturePairLabel(maximum: Int, minimum: Int): String = "$maximum° / $minimum°"
 
     fun icon(code: Int): String = when (code) {
         0 -> "☀"; 1, 2 -> "🌤"; 3 -> "☁"; 45, 48 -> "🌫"

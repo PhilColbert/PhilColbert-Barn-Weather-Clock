@@ -18,7 +18,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - No gust rows, no weather dates at the top of columns, and no settings cog/icon on the widget.
 - Tapping anywhere on the widget opens that widget's configuration/settings screen.
 - Settings retain manual latitude/longitude, optional one-shot fused device location, background colour and transparency controls, Open-Meteo attribution and installed version.
-- A visible “Remove widget” help action explains the Android launcher removal process. The actual removal is performed by the launcher: press and hold the widget and choose Remove (or drag it to Remove). Android AppWidget hosts own widget IDs; the app cannot safely remove a host-owned widget itself.
+- A visible “Remove widget” help action explains the Android launcher removal process. The actual removal is performed by the launcher: press and hold the widget and choose Remove (or drag it to Remove). Android AppWidget hosts own widget IDs; the app cannot safely remove a host-owned widget itself. The provider cleans up that widget's appearance preferences in onDeleted and cancels periodic refresh when the last widget is removed.
 - Weather is live Open-Meteo data. Celsius and mph.
 - Preserve 30-minute WorkManager refresh, location permissions and manual-entry fallback.
 

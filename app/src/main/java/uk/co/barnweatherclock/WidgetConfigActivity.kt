@@ -1,13 +1,22 @@
 package uk.co.barnweatherclock
 
+import android.Manifest
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.ViewGroup
 import android.widget.*
+import java.util.concurrent.Executor
 
 class WidgetConfigActivity : Activity() {
     private var widgetId = AppWidgetManager.INVALID_APPWIDGET_ID
@@ -16,6 +25,15 @@ class WidgetConfigActivity : Activity() {
     private lateinit var longitude: EditText
     private lateinit var background: Spinner
     private lateinit var transparency: SeekBar
+    private var pendingListener: LocationListener? = null
+    private val locationHandler = Handler(Looper.getMainLooper())
+    private val locationTimeout = Runnable {
+        pendingListener?.let { listener ->
+            (getSystemService(Context.LOCATION_SERVICE) as LocationManager).removeUpdates(listener)
+        }
+        pendingListener = null
+        Toast.makeText(this, "Could not get a location yet. Check that Location is enabled and try again.", Toast.LENGTH_LONG).show()
+    }
     private val colours = intArrayOf(Color.rgb(32, 40, 51), Color.rgb(20, 55, 85),
         Color.rgb(45, 45, 45), Color.BLACK)
 
@@ -50,6 +68,10 @@ class WidgetConfigActivity : Activity() {
             setText(prefs.getString("longitude", ""))
         }
         root.addView(longitude)
+        root.addView(Button(this).apply {
+            text = "Use current device location"
+            setOnClickListener { obtainCurrentLocation() }
+        })
         label("Background colour")
         background = Spinner(this)
         background.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,
@@ -72,6 +94,91 @@ class WidgetConfigActivity : Activity() {
             setPadding(0, 12, 0, 0)
         })
         setContentView(ScrollView(this).apply { addView(root) })
+    }
+
+    private fun obtainCurrentLocation() {
+        val fineGranted = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        val coarseGranted = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if (!fineGranted && !coarseGranted) {
+            requestPermissions(arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ), LOCATION_PERMISSION_REQUEST)
+            return
+        }
+
+        val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val provider = when {
+            fineGranted && manager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> LocationManager.GPS_PROVIDER
+            manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> LocationManager.NETWORK_PROVIDER
+            fineGranted && manager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER) -> LocationManager.PASSIVE_PROVIDER
+            else -> null
+        }
+        if (provider == null) {
+            Toast.makeText(this, "Turn on Location services, then try again.", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        Toast.makeText(this, "Getting current location…", Toast.LENGTH_SHORT).show()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            manager.getCurrentLocation(provider, null, Executor { command -> runOnUiThread(command) }) { result ->
+                if (result != null) populateCoordinates(result)
+                else Toast.makeText(this, "No location fix received. Try again outdoors or check Location settings.", Toast.LENGTH_LONG).show()
+            }
+        } else {
+            val listener = object : LocationListener {
+                override fun onLocationChanged(result: Location) {
+                    locationHandler.removeCallbacks(locationTimeout)
+                    pendingListener = null
+                    manager.removeUpdates(this)
+                    populateCoordinates(result)
+                }
+                @Deprecated("Deprecated by Android")
+                override fun onStatusChanged(providerName: String?, status: Int, extras: Bundle?) = Unit
+                override fun onProviderEnabled(providerName: String) = Unit
+                override fun onProviderDisabled(providerName: String) {
+                    locationHandler.removeCallbacks(locationTimeout)
+                    pendingListener = null
+                    manager.removeUpdates(this)
+                    Toast.makeText(this@WidgetConfigActivity, "Location provider was disabled.", Toast.LENGTH_LONG).show()
+                }
+            }
+            try {
+                pendingListener = listener
+                manager.requestSingleUpdate(provider, listener, Looper.getMainLooper())
+                locationHandler.postDelayed(locationTimeout, 20000L)
+            } catch (_: SecurityException) {
+                pendingListener = null
+                Toast.makeText(this, "Location permission is required.", Toast.LENGTH_LONG).show()
+            } catch (_: IllegalArgumentException) {
+                pendingListener = null
+                Toast.makeText(this, "That location provider is unavailable.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST) {
+            if (grantResults.any { it == PackageManager.PERMISSION_GRANTED }) obtainCurrentLocation()
+            else Toast.makeText(this, "Location permission was not granted. You can still enter coordinates manually.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun populateCoordinates(result: Location) {
+        latitude.setText(String.format(java.util.Locale.US, "%.6f", result.latitude))
+        longitude.setText(String.format(java.util.Locale.US, "%.6f", result.longitude))
+        location.setText("Current device location")
+        Toast.makeText(this, "Current coordinates added. Press Save settings to apply them.", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDestroy() {
+        locationHandler.removeCallbacks(locationTimeout)
+        pendingListener?.let {
+            (getSystemService(Context.LOCATION_SERVICE) as LocationManager).removeUpdates(it)
+        }
+        pendingListener = null
+        super.onDestroy()
     }
 
     private fun saveSettings() {
@@ -98,5 +205,9 @@ class WidgetConfigActivity : Activity() {
             intArrayOf(widgetId), null)
         WeatherRefresh.refresh(this, intArrayOf(widgetId))
         finish()
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST = 4107
     }
 }

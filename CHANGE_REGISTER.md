@@ -115,3 +115,11 @@ Baseline: v0.9
 - **Version:** v1.1 / versionCode 7.
 - **Files planned:** widget_barn_weather.xml, BarnWeatherWidgetProvider.kt, WidgetConfigActivity.kt, app/build.gradle.kts, CHANGE_REGISTER.md, SPECIFICATION.md, MANIFEST.md, VERSION_HISTORY.md, README.md.
 - **Validation:** Pending source review, GitHub Actions compile, and device screenshot comparison. The approved reference is barn_weather_clock_widget_preview.png; its content was inspected before this change. No physical-device rendering will be claimed without a device capture.
+
+
+## BWC-CHG-015 — correction of unauthorised widget sizing and load failure investigation
+- **Request:** User reports that BWC-CHG-014 changed the widget to an unwanted 5×2 footprint and the installed widget displays “Can't load widget”. Correct only the unauthorised sizing change and restore the known-good provider update path while retaining the approved layout and tap-to-settings behaviour.
+- **Baseline:** BWC-CHG-014, branch feature/android-starter, current manifest descriptor SHA 60e3d57e4bdbac8eee43eadbde2ddcce1a91d191; provider SHA a8bd8ab687d9d98377948088e7921d5be33d575c. Known v1.0 widget descriptor restored from commit 569d7b22f862cba32b19754a76d774be0f51b54 (minWidth 360dp, minHeight 100dp, minResizeWidth 320dp, minResizeHeight 88dp).
+- **Scope:** Restore the exact pre-change widget size descriptor. Rebase provider logic on the previously working v1.0 provider rather than retain the wholesale rewrite, then apply only the new view IDs, widget tap PendingIntent, and safe Android deletion cleanup. Do not change layout dimensions, existing weather fetch/refresh architecture, location, settings or other app behaviour.
+- **Version:** Keep v1.1/versionCode 7 until a verified fix build is available.
+- **Validation:** Prior v1.1 CI build succeeded on source commit 50fbca9fc6c12f08784cb0c1433642013a0e4b07, but this does not establish widget runtime rendering. New CI build and device launch test pending.

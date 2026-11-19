@@ -60,7 +60,7 @@ object WeatherData {
         } finally { connection.disconnect() }
     }
 
-    fun dayNightLabel(day: Int, night: Int): String = "$day°\n$night°"
+    fun temperaturePairLabel(maximum: Int, minimum: Int): String = "$maximum°\n$minimum°"
 
     fun icon(code: Int): String = when (code) {
         0 -> "☀"; 1, 2 -> "🌤"; 3 -> "☁"; 45, 48 -> "🌫"

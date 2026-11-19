@@ -49,7 +49,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - **UNRESOLVED:** Reverse geocoding of coordinates into a human-readable place name is not implemented.
 - **UNRESOLVED:** Primary Android device model and Android API level for device testing.
 - **PROPOSED:** Default slate background with 20% transparency.
-- **UNRESOLVED:** Minimum widget dimensions and launcher resize behaviour.
+- **FIXED for v1.0:** Minimum widget dimensions are 360 × 100dp; resize minimum is 320 × 88dp. Actual launcher sizing and readability still require physical-device verification.
 - **FIXED for v0.2:** Locale-aware clock date display uses `EEE d MMM`. **FIXED for v0.8:** Current-weather date uses `d MMM` with no weekday.
 
 ## Acceptance criteria

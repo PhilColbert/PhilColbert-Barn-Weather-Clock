@@ -46,6 +46,8 @@
             </LinearLayout>
             <TextView android:id="@+id/current_wind" android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="≋ NW 12 mph" android:textColor="#FFE0E7F2" android:textSize="10sp" android:maxLines="1" />
+            <TextView android:id="@+id/current_gust" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="⚑ 22 mph" android:textColor="#FFE0E7F2" android:textSize="10sp" android:maxLines="1" />
         </LinearLayout>
         <View android:layout_width="1dp" android:layout_height="match_parent" android:layout_marginVertical="7dp"
             android:background="#777F8DCE" />
@@ -65,6 +67,8 @@
             </LinearLayout>
             <TextView android:id="@+id/forecast_wind" android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="≋ W 14 mph" android:textColor="#FFE0E7F2" android:textSize="10sp" android:maxLines="1" />
+            <TextView android:id="@+id/forecast_gust" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="⚑ 28 mph" android:textColor="#FFE0E7F2" android:textSize="10sp" android:maxLines="1" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

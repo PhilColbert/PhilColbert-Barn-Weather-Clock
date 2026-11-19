@@ -1,3 +1,12 @@
+## v0.4 — 2026-11-19
+- BWC-CHG-004: Added a "Use current device location" button to widget configuration.
+- Added foreground coarse/fine location permission declarations and runtime permission handling; permission is requested only after the user taps the button.
+- On supported Android versions, retrieves a one-shot location fix using the enabled GPS or network provider and fills the latitude/longitude fields.
+- Coordinates are not saved/applied until the user presses Save settings. Manual coordinate entry remains available if permission is denied or location is unavailable.
+- Added a timeout for the legacy single-update path on Android 8–10.
+- Incremented app versionName to 0.4; versionCode remains 1 because no release has been issued.
+- GitHub source commit/fetch verification only; compilation and device testing remain pending.
+
 # Version History
 
 ## v0.3 — 2026-11-19

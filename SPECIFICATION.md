@@ -1,8 +1,8 @@
 # Barn Weather Clock — Project Specification
 
 **Project ID:** BWC-001  
-**Baseline:** v0.7  
-**Status:** v0.7 implementation baseline  
+**Baseline:** v0.8  
+**Status:** v0.8 implementation baseline  
 **Date:** 2026-11-19
 
 ## Purpose
@@ -13,8 +13,8 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - Kotlin implementation using Android AppWidget APIs.
 - Current time is prominent; current design target is **32sp**.
 - Current date appears beneath the time.
-- Current conditions: weather icon, temperature, wind speed in mph, compass direction, and date.
-- Next-day forecast uses the same icon-left / details-right arrangement as current weather.
+- Current conditions: weather icon, live current temperature, today's daytime maximum and nighttime minimum, wind speed in mph, compass direction, and date shown as day/month only (no weekday).
+- Next-day forecast uses the same icon-left / details-right arrangement as current weather and shows the next day's daytime maximum and nighttime minimum.
 - Forecast column shows its actual calendar date. Do not show the words “Tomorrow” or an extra +1 day label.
 - No settings cog or settings icon inside the widget.
 - Appearance configuration is reached through the launcher's widget configuration flow.
@@ -38,8 +38,8 @@ A native Android home-screen widget showing current time/date, current outdoor w
 ## Approved layout baseline
 - Single-line horizontal widget.
 - Left: prominent 32sp current time, current date below.
-- Middle: current weather icon on the left; temperature, wind speed/direction and current date on the right.
-- Right: next-day forecast icon on the left; temperature, wind speed/direction and forecast date on the right.
+- Middle: current weather icon on the left; live temperature, day/night high and low, wind speed/direction and current date (d MMM, no weekday) on the right.
+- Right: next-day forecast icon on the left; day/night high and low, wind speed/direction and forecast date on the right.
 - No “Tomorrow” label, no +1 day label, no settings icon.
 
 ## Unresolved items
@@ -50,7 +50,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - **UNRESOLVED:** Primary Android device model and Android API level for device testing.
 - **PROPOSED:** Default slate background with 20% transparency.
 - **UNRESOLVED:** Minimum widget dimensions and launcher resize behaviour.
-- **FIXED for v0.2:** Locale-aware `EEE d MMM` date display.
+- **FIXED for v0.2:** Locale-aware clock date display uses `EEE d MMM`. **FIXED for v0.8:** Current-weather date uses `d MMM` with no weekday.
 
 ## Acceptance criteria
 1. Widget can be added from the Android widget picker.

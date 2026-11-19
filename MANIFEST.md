@@ -5,8 +5,8 @@
 **Repository:** https://github.com/PhilColbert/PhilColbert-Barn-Weather-Clock
 **Working branch:** feature/android-starter
 **Default branch:** main
-**Version:** v0.4
-**Status:** v0.4 current-location feature committed; user build/device verification pending
+**Version:** v0.5
+**Status:** v0.5 location retrieval reliability correction committed; user build/device verification pending
 
 ## Tracked files
 
@@ -19,15 +19,15 @@
 | `settings.gradle.kts` | v0.2 | New Android project file |
 | `build.gradle.kts` | v0.2 | New Android project file |
 | `gradle.properties` | v0.2 | New Android project file |
-| `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; app versionName 0.4 in BWC-CHG-004 |
-| `app/src/main/AndroidManifest.xml` | v0.2/v0.4 | Added foreground coarse/fine location permission declarations in BWC-CHG-004 |
+| `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; app versionName 0.5 in BWC-CHG-005 |
+| `app/src/main/AndroidManifest.xml` | v0.2/v0.4 | Added foreground coarse/fine location permission declarations in BWC-CHG-004; unchanged in v0.5 |
 | `app/src/main/res/xml/barn_weather_widget_info.xml` | v0.2 | New Android project file |
 | `app/src/main/res/values/strings.xml` | v0.2 | New Android project file |
 | `app/src/main/res/layout/widget_barn_weather.xml` | v0.2 | New Android project file |
 | `app/src/main/java/uk/co/barnweatherclock/WeatherData.kt` | v0.2 | New Android project file |
 | `app/src/main/java/uk/co/barnweatherclock/BarnWeatherWidgetProvider.kt` | v0.2 | New Android project file |
 | `app/src/main/java/uk/co/barnweatherclock/WeatherRefresh.kt` | v0.2 | New Android project file |
-| `app/src/main/java/uk/co/barnweatherclock/WidgetConfigActivity.kt` | v0.2/v0.4 | Added one-shot current-location button, permission flow and coordinate population in BWC-CHG-004 |
+| `app/src/main/java/uk/co/barnweatherclock/WidgetConfigActivity.kt` | v0.2/v0.4 | Added current-location button and permission flow in BWC-CHG-004; provider selection, cached-fix use and single-update listener corrected in BWC-CHG-005 |
 | `README.md` | v0.2 | New Android project file |
 
 ## Integrity and test status

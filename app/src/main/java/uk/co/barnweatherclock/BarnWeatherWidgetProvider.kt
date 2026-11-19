@@ -1,11 +1,11 @@
 package uk.co.barnweatherclock
 
-import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
+import android.app.PendingIntent
+import android.content.Context
 import android.widget.RemoteViews
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
@@ -53,9 +53,7 @@ class BarnWeatherWidgetProvider : AppWidgetProvider() {
             ids.forEach { id ->
                 val views = RemoteViews(context.packageName, R.layout.widget_barn_weather)
                 views.setInt(R.id.widget_panel, "setBackgroundColor",
-                    prefs.getInt("background_$id", 0xFF202A36.toInt()))
-
-                // The widget itself is the route back to this widget's settings.
+                    prefs.getInt("background_$id", 0xCC202833.toInt()))
                 val settingsIntent = Intent(context, WidgetConfigActivity::class.java).apply {
                     putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -65,11 +63,9 @@ class BarnWeatherWidgetProvider : AppWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
                 views.setOnClickPendingIntent(R.id.widget_root, settingsPendingIntent)
-
                 if (snapshot != null) {
                     views.setTextViewText(R.id.current_icon, WeatherData.icon(snapshot.current.code))
                     views.setViewVisibility(R.id.current_now, android.view.View.VISIBLE)
-                    views.setTextViewText(R.id.current_now, "Now")
                     views.setTextViewText(R.id.current_temp, snapshot.current.temperature.toString() + "°")
                     views.setTextViewText(R.id.current_daynight,
                         "Day " + snapshot.current.dayTemperature + "°\nNight " + snapshot.current.nightTemperature + "°")

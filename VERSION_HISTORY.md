@@ -1,73 +1,11 @@
 # Version History
 
-## v1.0 — 2026-11-19
-- BWC-CHG-013: Recreated the approved reference in the native widget: larger left-hand clock/date, middle current-weather and right forecast columns, dates at the top of weather columns, rounded navy panel with blue-purple border and vertical dividers.
-- High/low temperatures now appear on one line separated by `/`. Current live temperature remains beside the small Now label.
-- Wind rows show a wind glyph followed by compass direction and speed, with a second flag-marked row for current/forecast gusts from Open-Meteo.
-- Preserved Open-Meteo data, location configuration, one-shot fused location, refresh scheduling and background colour/transparency preferences.
-- Incremented versionName to 1.0 and versionCode to 6. CI artifact label is `barn-weather-clock-v1.0-debug`.
-- Source and records committed on feature/android-starter. CI compilation, APK inspection and physical-device visual comparison pending.
+## v1.1 — 2026-11-19
+- BWC-CHG-014: Reworked the native widget to match the approved screenshot: left clock/date, centre current weather, right next-day forecast; icons left of details; live Now temperature; separate Day/Night rows; wind speed and direction; date at the bottom of each weather column.
+- Removed the v1.0-only top weather dates, gust rows and blue-purple gradient edge, which were not present in the approved screenshot.
+- Tapping anywhere on the widget now opens that widget's settings.
+- Added a visible Remove widget help action in settings. Actual deletion is delegated to the Android launcher using its standard long-press > Remove action because the launcher owns the widget ID.
+- Preserved live Open-Meteo, manual/device location configuration, appearance preferences and 30-minute refresh.
+- Incremented versionName to 1.1 and versionCode to 7.
+- Source committed to feature/android-starter. CI compilation, APK inspection and physical-device screenshot comparison pending.
 
-# Version History
-
-## v0.9 — 2026-11-19
-- BWC-CHG-012: Removed the “Day” and “Night” words from current and next-day high/low pairs; values remain on separate lines without labels.
-- Added a small “Now” label beside the larger live current temperature on the same line; label is hidden while weather is unavailable.
-- Incremented versionName from 0.8 to 0.9 and versionCode from 4 to 5.
-- Source update and records are on feature/android-starter. CI workflow artifact label is `barn-weather-clock-v0.9-debug`; build completion, APK inspection and physical-device rendering remain pending.
-
-## v0.8 — 2026-11-19
-- BWC-CHG-008: Added Open-Meteo daily maximum/minimum temperatures for the current day and next-day forecast.
-- Current weather retains the live current temperature and now also shows Day maximum and Night minimum; forecast shows Day maximum and Night minimum.
-- BWC-CHG-009: Current-weather date is displayed as day/month only (`d MMM`), without weekday. The main clock date is unchanged.
-- Incremented versionName from 0.7 to 0.8 and versionCode from 3 to 4 for Android update recognition.
-- GitHub Actions run 44540883299 succeeded: Java 17 setup, Android SDK setup, SDK package install, Gradle 8.9, `assembleDebug` and artifact upload passed. Debug APK downloaded from artifact 14537997709 and verified present in the ZIP. APK SHA-256: `f521a0701d29553a291b40117e4c4b5fa7b820476abe3ec3f7b8c8f8d7112208`. Physical-device installation and visual testing remain pending.
-
-## v0.6 — 2026-11-19
-- BWC-CHG-006: Replaced LocationManager-only polling with Google Play Services FusedLocationProviderClient.
-- Requests a high-accuracy current fix, accepting a recent cached fix up to 120 seconds old; if unavailable, falls back to a single fused location update for up to 30 seconds.
-- Added in-screen location progress and failure messages.
-- Added a settings footer showing the installed version dynamically from BuildConfig.VERSION_NAME.
-- Added play-services-location 21.3.0 and explicitly enabled BuildConfig generation.
-- Incremented app versionName to 0.6; versionCode incremented from 1 to 2 so Android recognises this as an update over v0.5.
-- GitHub source and record fetch verification only; Android compilation and physical-device test remain pending.
-
-## v0.5 — 2026-11-19
-- BWC-CHG-005: Corrected provider selection so GPS is used when enabled even when Android grants approximate/coarse location permission. Android controls the precision returned.
-- Replaced the API 30+ one-shot callback path with a single location-update listener, matching the legacy path and avoiding reliance on a null-prone one-shot result.
-- Uses a recent cached fix (up to two minutes old) immediately when available; otherwise listens for a fix, then unregisters. A 30-second timeout reports failure.
-- The listener is removed on success, timeout, provider disable or Activity destruction; no ongoing/background tracking.
-- Toast now reports provider, coordinate accuracy and actionable errors.
-- Incremented app versionName to 0.5; versionCode remains 1 because no release has been issued.
-- GitHub source and record fetch verification only. Android compilation and physical-device GPS test remain pending.
-
-## v0.4 — 2026-11-19
-- BWC-CHG-004: Added a "Use current device location" button to widget configuration.
-- Added foreground coarse/fine location permission declarations and runtime permission handling; permission is requested only after the user taps the button.
-- On supported Android versions, retrieves a one-shot location fix using the enabled GPS or network provider and fills the latitude/longitude fields.
-- Coordinates are not saved/applied until the user presses Save settings. Manual coordinate entry remains available if permission is denied or location is unavailable.
-- Added a timeout for the legacy single-update path on Android 8–10.
-- Incremented app versionName to 0.4; versionCode remains 1 because no release has been issued.
-- GitHub source commit/fetch verification only; compilation and device testing remain pending.
-
-## v0.3 — 2026-11-19
-- BWC-CHG-003: Fixed the reported Java/Kotlin JVM target mismatch by explicitly setting both compilation targets to JVM 17.
-- Incremented app versionName from 0.2 to 0.3.
-- Preserved all other Android source files unchanged.
-- Build retest pending; no successful build or APK claimed.
-
-## v0.2 — 2026-11-19
-- BWC-CHG-002: Added initial native Kotlin Android project.
-- Implemented Android AppWidget layout with 48sp TextClock and date.
-- Integrated Open-Meteo current conditions and next-day daily forecast.
-- Added manual coordinate settings, colour presets, transparency and WorkManager refresh.
-- Added Android manifest, widget metadata, resources, Gradle configuration and README.
-- Committed on `feature/android-starter`; `main` remains unchanged.
-- All 17 tracked project and record files fetched successfully from the feature branch; branch comparison confirms 18 commits ahead of main and no commits behind.
-- Source integrity fetch verification passed; compilation and runtime remain unverified.
-- Not compiled; no APK, screenshots, emulator test or physical-device test produced.
-
-## v0.1 — 2026-11-19
-- Created initial project specification, change register and manifest.
-- Recorded fixed widget layout and behaviour requirements.
-- No Android application code or build existed at this version.

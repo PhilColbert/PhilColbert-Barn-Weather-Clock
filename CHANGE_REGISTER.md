@@ -20,7 +20,14 @@ Baseline: v0.8
 - Do not describe proposed or mock data as live data.
 
 
-## BWC-CHG-007 implementation notes\n- Reduced the widget TextClock from 48sp to 32sp following user feedback that the time was too large.\n- Incremented versionName to 0.7 and versionCode to 3 so Android recognises this update over v0.6 (versionCode 2).\n- Corrected the v0.6 record: its actual Gradle versionCode was 2, not 1.\n- Updated specification, manifest, version history and README.\n- Source/record fetch verification pending; no Android compilation, emulator or device test performed.\n\n## BWC-CHG-008 / BWC-CHG-009 implementation notes
+## BWC-CHG-007 implementation notes
+- Reduced the widget TextClock from 48sp to 32sp following user feedback that the time was too large.
+- Incremented versionName to 0.7 and versionCode to 3 so Android recognises this update over v0.6 (versionCode 2).
+- Corrected the v0.6 record: its actual Gradle versionCode was 2, not 1.
+- Updated specification, manifest, version history and README.
+- Source/record fetch verification pending; no Android compilation, emulator or device test performed.
+
+## BWC-CHG-008 / BWC-CHG-009 implementation notes
 - Open-Meteo daily data now requests temperature_2m_max and temperature_2m_min for the current date and following date.
 - Current-weather column retains the live instantaneous temperature and adds today's Day maximum and Night minimum.
 - Forecast column displays the next day's Day maximum and Night minimum.
@@ -44,7 +51,15 @@ Baseline: v0.8
 - Preserved all other project source files byte-for-byte.
 - The uploaded build log is the baseline failure evidence; no local Android build environment is available here to rerun the Windows build.
 
-## BWC-CHG-005 implementation notes\n- The v0.4 implementation excluded GPS_PROVIDER whenever fine permission was not granted, even though Android can serve approximate/coarse results from the GPS provider. This could leave no eligible provider on devices without an enabled network provider.\n- The v0.4 API 30+ path relied only on getCurrentLocation callback; a null callback result ended the attempt without requesting an update.\n- v0.5 selects GPS whenever enabled, irrespective of fine-vs-coarse grant, and falls back to network provider when GPS is unavailable.\n- A recent cached fix (up to two minutes) is applied immediately; otherwise a single location update is requested and the listener is removed after success, timeout, provider disable or Activity destruction.\n- Added visible provider/accuracy/error feedback. No background permission or ongoing tracking.\n- Source committed and fetched successfully; compile and physical-device test remain pending.\n\n## BWC-CHG-004 implementation notes
+## BWC-CHG-005 implementation notes
+- The v0.4 implementation excluded GPS_PROVIDER whenever fine permission was not granted, even though Android can serve approximate/coarse results from the GPS provider. This could leave no eligible provider on devices without an enabled network provider.
+- The v0.4 API 30+ path relied only on getCurrentLocation callback; a null callback result ended the attempt without requesting an update.
+- v0.5 selects GPS whenever enabled, irrespective of fine-vs-coarse grant, and falls back to network provider when GPS is unavailable.
+- A recent cached fix (up to two minutes) is applied immediately; otherwise a single location update is requested and the listener is removed after success, timeout, provider disable or Activity destruction.
+- Added visible provider/accuracy/error feedback. No background permission or ongoing tracking.
+- Source committed and fetched successfully; compile and physical-device test remain pending.
+
+## BWC-CHG-004 implementation notes
 - Added ACCESS_COARSE_LOCATION and ACCESS_FINE_LOCATION manifest permissions. No background location permission or continuous tracking.
 - Added a one-shot current-device location button in widget configuration; permission is requested only after the button is tapped.
 - Supports precise GPS when available and network location when only coarse permission/provider is available.
@@ -61,10 +76,10 @@ Baseline: v0.8
 - Incremented versionName to 0.6; versionCode incremented to 2 so Android recognises the update over the previous install.
 - Source and records fetched from GitHub for verification; compilation and physical-device location testing are not yet performed.
 
-| BWC-CHG-007 | APPROVED / IN PROGRESS | Reduce the widget's oversized clock from 48sp to 32sp; align the specification and correct the v0.6 versionCode record | v0.6 | app/src/main/res/layout/widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before implementation; source/build/device checks pending |
+| BWC-CHG-007 | IMPLEMENTED / BUILD VERIFICATION PENDING | Reduce the widget's oversized clock from 48sp to 32sp; align the specification and correct the v0.6 versionCode record | v0.6 | app/src/main/res/layout/widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before implementation; source/build/device checks pending |
 
 | BWC-CHG-008 | IMPLEMENTED / BUILD VERIFICATION PENDING | Add daily maximum and minimum temperatures for today and the next-day forecast, while retaining the live current temperature and existing weather details | v0.7 | WeatherData.kt, BarnWeatherWidgetProvider.kt, widget_barn_weather.xml, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Open-Meteo daily high/low parsing and widget display implemented; source verification pending; not compiled/device-tested |
 
 | BWC-CHG-009 | IMPLEMENTED / BUILD VERIFICATION PENDING | Remove weekday from the current-weather date, showing only day/month; package the combined changes as v0.8 | v0.7 / partial BWC-CHG-008 source | widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Current-weather date format set to d MMM; app versionName 0.8/versionCode 4; source verification pending; not compiled/device-tested |
 
-| BWC-CHG-010 | APPROVED / IN PROGRESS | Add a reproducible GitHub Actions Android build to compile v0.8 and publish the debug APK as a downloadable workflow artifact | v0.8 source / no Gradle wrapper or local Android SDK available | .github/workflows/android-build.yml, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before workflow creation; CI execution and APK artifact pending |
+| BWC-CHG-010 | IMPLEMENTED / CI RUN IN PROGRESS | Add a reproducible GitHub Actions Android build to compile v0.8 and publish the debug APK as a downloadable workflow artifact | v0.8 source / no Gradle wrapper or local Android SDK available | .github/workflows/android-build.yml, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Workflow committed; GitHub Actions run 44540743045 started successfully; build and APK artifact pending |

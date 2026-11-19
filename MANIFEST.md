@@ -19,7 +19,7 @@
 | `settings.gradle.kts` | v0.2 | New Android project file |
 | `build.gradle.kts` | v0.2 | New Android project file |
 | `gradle.properties` | v0.2 | New Android project file |
-| `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; fused location dependency and app versionName 0.6 in BWC-CHG-006 |
+| `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; fused location dependency and app versionName 0.6 and versionCode 2 in BWC-CHG-006 |
 | `app/src/main/AndroidManifest.xml` | v0.2/v0.4 | Added foreground coarse/fine location permission declarations in BWC-CHG-004; unchanged in v0.5 |
 | `app/src/main/res/xml/barn_weather_widget_info.xml` | v0.2 | New Android project file |
 | `app/src/main/res/values/strings.xml` | v0.2 | New Android project file |

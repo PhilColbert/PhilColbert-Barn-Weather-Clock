@@ -20,7 +20,7 @@
 | app/src/main/res/layout/widget_barn_weather.xml | Reworked three-column widget to match approved screenshot
 | app/src/main/res/xml/barn_weather_widget_info.xml | Minimum size 360 × 134dp; resize minimum 320 × 119dp to match reference proportions |
 | app/src/main/res/drawable/widget_frame.xml | Solid slate panel with restrained outline and rounded corners |
-| app/src/main/java/uk/co/barnweatherclock/BarnWeatherWidgetProvider.kt | Widget-wide tap opens its own settings; current/forecast rows match screenshot |
+| app/src/main/java/uk/co/barnweatherclock/BarnWeatherWidgetProvider.kt | Widget-wide tap opens its own settings; current/forecast rows match screenshot; onDeleted clears per-widget appearance preferences and onDisabled cancels refresh work |
 | app/src/main/java/uk/co/barnweatherclock/WidgetConfigActivity.kt | Adds visible removal guidance; retains location and appearance settings |
 | app/build.gradle.kts | versionName 1.1, versionCode 7 |
 | .github/workflows/android-build.yml | CI debug APK workflow; artifact label barn-weather-clock-v1.1-debug |

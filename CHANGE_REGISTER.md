@@ -32,7 +32,7 @@ Baseline: v0.6
 ## BWC-CHG-003 implementation notes
 - Set Java sourceCompatibility and targetCompatibility to VERSION_17.
 - Set Kotlin jvmTarget to 17.
-- Incremented app versionName to 0.3; versionCode remains 1 because no release has been issued.
+- Incremented app versionName to 0.3; versionCode incremented to 2 so Android recognises this as an update over the previously installed v0.5 (versionCode 1).
 - Preserved all other project source files byte-for-byte.
 - The uploaded build log is the baseline failure evidence; no local Android build environment is available here to rerun the Windows build.
 

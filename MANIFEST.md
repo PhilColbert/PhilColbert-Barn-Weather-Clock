@@ -33,6 +33,7 @@
 ## Integrity and test status
 - Documentation files originate from v0.1 and were updated for v0.2.
 - Android project files were newly added in BWC-CHG-002.
+- All 17 tracked project and record files were fetched from the feature branch successfully after commit.
 - No files are claimed as rebuilt or device-tested.
 - No APK has been produced.
 - Visual baseline screenshots and matching after-change screenshots are not yet available; no emulator/device has been supplied or tested.

@@ -1,8 +1,8 @@
 # Barn Weather Clock — Project Specification
 
 **Project ID:** BWC-001  
-**Baseline:** v0.9  
-**Status:** v0.9 implementation baseline  
+**Baseline:** v1.0  
+**Status:** v1.0 layout implementation baseline  
 **Date:** 2026-11-19
 
 ## Purpose
@@ -11,7 +11,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 ## Fixed requirements
 - Native Android AppWidget, not a shortcut or web page.
 - Kotlin implementation using Android AppWidget APIs.
-- Current time is prominent; current design target is **32sp**.
+- Current time is prominent; current design target is **42sp**.
 - Current date appears beneath the time.
 - Current conditions: weather icon, live current temperature, today's maximum and minimum temperatures, displayed as two unlabeled values, wind speed in mph, compass direction, and date shown as day/month only (no weekday).
 - Next-day forecast uses the same icon-left / details-right arrangement as current weather and shows the next day's maximum and minimum temperatures, displayed as two unlabeled values.
@@ -20,7 +20,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - Appearance configuration is reached through the launcher's widget configuration flow.
 - Appearance settings include background colour selection and adjustable transparency.
 - Appearance preferences are persisted and applied to the widget.
-- Compact horizontal widget: time/date on the left, current and next-day weather columns to the right.
+- Wide horizontal three-column widget: time/date on the left, current weather in the middle, and next-day forecast on the right. The panel uses a dark navy surface, rounded corners, a blue-purple edge, and subtle vertical dividers.
 - Weather values displayed must come from a live provider; mock-ups must be labelled illustrative.
 - Weather location must be configurable; no private precise address is hard-coded.
 - Configuration offers an optional current-device-location action using Google's fused location provider to populate latitude/longitude; manual coordinate entry remains available. The configuration screen displays the installed app version.
@@ -38,8 +38,8 @@ A native Android home-screen widget showing current time/date, current outdoor w
 ## Approved layout baseline
 - Single-line horizontal widget.
 - Left: prominent 32sp current time, current date below.
-- Middle: current weather icon on the left; a small “Now” label immediately beside the larger live temperature on one line, followed by two unlabeled temperature values, wind speed/direction and current date (d MMM, no weekday) on the right.
-- Right: next-day forecast icon on the left; two unlabeled temperature values, wind speed/direction and forecast date on the right.
+- Middle: current date at the top; current weather icon on the left; a small “Now” label beside the larger live temperature; today's maximum and minimum on one line separated by `/`; wind direction and speed along the bottom.
+- Right: next-day date at the top; forecast icon on the left; maximum and minimum on one line separated by `/`; wind direction and speed along the bottom.
 - No “Tomorrow” label, no +1 day label, no settings icon.
 
 ## Unresolved items

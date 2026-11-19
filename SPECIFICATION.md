@@ -23,6 +23,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - Compact horizontal widget: time/date on the left, current and next-day weather columns to the right.
 - Weather values displayed must come from a live provider; mock-ups must be labelled illustrative.
 - Weather location must be configurable; no private precise address is hard-coded.
+- Temperature display unit: Celsius.
 - Wind speed display unit: mph.
 
 ## Proposed technical approach

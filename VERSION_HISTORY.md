@@ -4,7 +4,7 @@
 - BWC-CHG-012: Removed the “Day” and “Night” words from current and next-day high/low pairs; values remain on separate lines without labels.
 - Added a small “NOW” label beside the larger live current temperature on the same line; label is hidden while weather is unavailable.
 - Incremented versionName from 0.8 to 0.9 and versionCode from 4 to 5.
-- Source update and records are on feature/android-starter. CI build, APK inspection and physical-device rendering remain pending.
+- Source update and records are on feature/android-starter. CI workflow artifact label is `barn-weather-clock-v0.9-debug`; build completion, APK inspection and physical-device rendering remain pending.
 
 ## v0.8 — 2026-11-19
 - BWC-CHG-008: Added Open-Meteo daily maximum/minimum temperatures for the current day and next-day forecast.

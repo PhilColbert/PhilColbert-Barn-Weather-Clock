@@ -8,6 +8,8 @@ Baseline: v0.2
 | BWC-CHG-001 | FIXED / SPECIFICATION | Establish initial widget requirements and layout baseline; documentation only | Empty repository | SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md | Initial records |
 | BWC-CHG-002 | IMPLEMENTED / NOT BUILD-VERIFIED | Create native Kotlin Android project with live Open-Meteo current/next-day weather, TextClock/date widget, manual coordinates, appearance configuration, periodic refresh, manifest, resources and build files | v0.1 docs-only baseline | Gradle files, app/**, README.md, project records | Files committed and fetched for verification; Android build/device tests not run |
 
+| BWC-CHG-003 | IN PROGRESS | Fix reported Kotlin/Java JVM-target mismatch by explicitly aligning Android Java and Kotlin compilation to JVM 17 | v0.2 / user build log | app/build.gradle.kts, project records | Build log confirms Java 1.8 versus Kotlin 22; fix pending build verification |
+
 ## Scope controls
 - Changes require a Change ID, request, baseline and scope before edits.
 - Preserve existing requirements unless the user explicitly changes them.

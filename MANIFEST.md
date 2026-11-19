@@ -23,12 +23,13 @@
 | app/src/main/java/uk/co/barnweatherclock/BarnWeatherWidgetProvider.kt | Widget-wide tap opens its own settings; current/forecast rows match screenshot |
 | app/src/main/java/uk/co/barnweatherclock/WidgetConfigActivity.kt | Adds visible removal guidance; retains location and appearance settings |
 | app/build.gradle.kts | versionName 1.1, versionCode 7 |
-| .github/workflows/android-build.yml | CI debug APK workflow; artifact label update pending |
+| .github/workflows/android-build.yml | CI debug APK workflow; artifact label barn-weather-clock-v1.1-debug |
 
 ## Integrity and test status
 - Previous v0.8 CI build run 44540883299 succeeded; this does not verify v1.1.
 - v1.1 source changes are committed on feature/android-starter only. main has not been intentionally modified.
 - Source-level review and GitHub fetch verification are pending final pass.
+- Initial CI run 44547837308 failed at Android resource linking because the first layout draft used invalid percentage heights for separators. The offending values were replaced with valid match_parent heights and dp margins in commit 090652523826bea441154bfa4d642ea4f2353be7. A fresh CI run 44548191284 is queued; successful compilation is not yet established.
 - CI compilation and APK artifact inspection are pending.
 - No v1.1 APK is yet claimed.
 - No emulator or physical-device installation/rendering test is claimed.

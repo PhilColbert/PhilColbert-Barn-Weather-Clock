@@ -10,13 +10,11 @@ import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.ViewGroup
 import android.widget.*
-import java.util.concurrent.Executor
 
 class WidgetConfigActivity : Activity() {
     private var widgetId = AppWidgetManager.INVALID_APPWIDGET_ID
@@ -26,13 +24,13 @@ class WidgetConfigActivity : Activity() {
     private lateinit var background: Spinner
     private lateinit var transparency: SeekBar
     private var pendingListener: LocationListener? = null
+    private var activeLocationManager: LocationManager? = null
     private val locationHandler = Handler(Looper.getMainLooper())
     private val locationTimeout = Runnable {
-        pendingListener?.let { listener ->
-            (getSystemService(Context.LOCATION_SERVICE) as LocationManager).removeUpdates(listener)
-        }
+        pendingListener?.let { listener -> activeLocationManager?.removeUpdates(listener) }
         pendingListener = null
-        Toast.makeText(this, "Could not get a location yet. Check that Location is enabled and try again.", Toast.LENGTH_LONG).show()
+        activeLocationManager = null
+        Toast.makeText(this, "No location fix received within 30 seconds. Check Location is enabled, then try again or enter coordinates manually.", Toast.LENGTH_LONG).show()
     }
     private val colours = intArrayOf(Color.rgb(32, 40, 51), Color.rgb(20, 55, 85),
         Color.rgb(45, 45, 45), Color.BLACK)
@@ -108,52 +106,63 @@ class WidgetConfigActivity : Activity() {
         }
 
         val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val provider = when {
-            fineGranted && manager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> LocationManager.GPS_PROVIDER
-            manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> LocationManager.NETWORK_PROVIDER
-            fineGranted && manager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER) -> LocationManager.PASSIVE_PROVIDER
-            else -> null
-        }
+        val provider = try {
+            // Approximate-location permission can still use the GPS provider; Android
+            // simply limits the precision of the returned coordinates.
+            when {
+                manager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> LocationManager.GPS_PROVIDER
+                manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> LocationManager.NETWORK_PROVIDER
+                else -> null
+            }
+        } catch (_: Exception) { null }
+
         if (provider == null) {
-            Toast.makeText(this, "Turn on Location services, then try again.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "No location provider is enabled. Turn on Location services and try again.", Toast.LENGTH_LONG).show()
             return
         }
 
-        Toast.makeText(this, "Getting current location…", Toast.LENGTH_SHORT).show()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            manager.getCurrentLocation(provider, null, Executor { command -> runOnUiThread(command) }) { result ->
-                if (result != null) populateCoordinates(result)
-                else Toast.makeText(this, "No location fix received. Try again outdoors or check Location settings.", Toast.LENGTH_LONG).show()
+        try {
+            // Use a recent cached fix immediately when available.
+            val cached = manager.getLastKnownLocation(provider)
+            if (cached != null && System.currentTimeMillis() - cached.time in 0..120000L) {
+                populateCoordinates(cached)
+                return
             }
-        } else {
+
+            Toast.makeText(this, "Waiting for a location fix from $provider…", Toast.LENGTH_SHORT).show()
             val listener = object : LocationListener {
                 override fun onLocationChanged(result: Location) {
                     locationHandler.removeCallbacks(locationTimeout)
                     pendingListener = null
-                    manager.removeUpdates(this)
+                    activeLocationManager?.removeUpdates(this)
+                    activeLocationManager = null
                     populateCoordinates(result)
                 }
                 @Deprecated("Deprecated by Android")
                 override fun onStatusChanged(providerName: String?, status: Int, extras: Bundle?) = Unit
                 override fun onProviderEnabled(providerName: String) = Unit
                 override fun onProviderDisabled(providerName: String) {
-                    locationHandler.removeCallbacks(locationTimeout)
-                    pendingListener = null
-                    manager.removeUpdates(this)
-                    Toast.makeText(this@WidgetConfigActivity, "Location provider was disabled.", Toast.LENGTH_LONG).show()
+                    if (providerName == provider) {
+                        locationHandler.removeCallbacks(locationTimeout)
+                        pendingListener = null
+                        activeLocationManager?.removeUpdates(this)
+                        activeLocationManager = null
+                        Toast.makeText(this@WidgetConfigActivity, "Location provider was disabled. Try again.", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
-            try {
-                pendingListener = listener
-                manager.requestSingleUpdate(provider, listener, Looper.getMainLooper())
-                locationHandler.postDelayed(locationTimeout, 20000L)
-            } catch (_: SecurityException) {
-                pendingListener = null
-                Toast.makeText(this, "Location permission is required.", Toast.LENGTH_LONG).show()
-            } catch (_: IllegalArgumentException) {
-                pendingListener = null
-                Toast.makeText(this, "That location provider is unavailable.", Toast.LENGTH_LONG).show()
-            }
+            pendingListener = listener
+            activeLocationManager = manager
+            manager.requestLocationUpdates(provider, 1000L, 0f, listener, Looper.getMainLooper())
+            locationHandler.postDelayed(locationTimeout, 30000L)
+        } catch (_: SecurityException) {
+            pendingListener = null
+            activeLocationManager = null
+            Toast.makeText(this, "Location permission is required. Allow approximate or precise location and try again.", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            pendingListener = null
+            activeLocationManager = null
+            Toast.makeText(this, "Could not start location: ${e.javaClass.simpleName}", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -169,15 +178,14 @@ class WidgetConfigActivity : Activity() {
         latitude.setText(String.format(java.util.Locale.US, "%.6f", result.latitude))
         longitude.setText(String.format(java.util.Locale.US, "%.6f", result.longitude))
         location.setText("Current device location")
-        Toast.makeText(this, "Current coordinates added. Press Save settings to apply them.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Location added (±${result.accuracy.toInt()} m). Press Save settings to apply it.", Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {
         locationHandler.removeCallbacks(locationTimeout)
-        pendingListener?.let {
-            (getSystemService(Context.LOCATION_SERVICE) as LocationManager).removeUpdates(it)
-        }
+        pendingListener?.let { activeLocationManager?.removeUpdates(it) }
         pendingListener = null
+        activeLocationManager = null
         super.onDestroy()
     }
 

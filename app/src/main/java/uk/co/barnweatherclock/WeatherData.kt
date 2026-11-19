@@ -14,7 +14,7 @@ object WeatherData {
             "?latitude=$latitude&longitude=$longitude" +
             "&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m" +
             "&daily=weather_code,temperature_2m_max,wind_speed_10m_max,wind_direction_10m_dominant" +
-            "&timezone=auto&forecast_days=2&wind_speed_unit=mph"
+            "&timezone=auto&forecast_days=2&temperature_unit=celsius&wind_speed_unit=mph"
         val connection = URL(endpoint).openConnection() as HttpURLConnection
         connection.connectTimeout = 10000
         connection.readTimeout = 10000

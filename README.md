@@ -13,7 +13,7 @@ Native Android home-screen widget built with Kotlin and Android AppWidget APIs.
 
 ## Build
 1. Open this repository in Android Studio.
-2. Allow Gradle sync and install Android SDK Platform 35 if prompted.
+2. Allow Gradle sync and install Android SDK Platform 35 if prompted. The project uses Android Gradle Plugin 8.7.3 (Gradle 8.9); if Android Studio asks for a Gradle installation, select Gradle 8.9.
 3. Select Build > Build Bundle(s) / APK(s) > Build APK(s).
 4. Add **Barn Weather Clock** from the launcher's widget picker.
 5. Enter latitude and longitude during widget configuration.

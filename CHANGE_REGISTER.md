@@ -8,7 +8,7 @@ Baseline: v0.2
 | BWC-CHG-001 | FIXED / SPECIFICATION | Establish initial widget requirements and layout baseline; documentation only | Empty repository | SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md | Initial records |
 | BWC-CHG-002 | IMPLEMENTED / NOT BUILD-VERIFIED | Create native Kotlin Android project with live Open-Meteo current/next-day weather, TextClock/date widget, manual coordinates, appearance configuration, periodic refresh, manifest, resources and build files | v0.1 docs-only baseline | Gradle files, app/**, README.md, project records | Files committed and fetched for verification; Android build/device tests not run |
 
-| BWC-CHG-003 | IN PROGRESS | Fix reported Kotlin/Java JVM-target mismatch by explicitly aligning Android Java and Kotlin compilation to JVM 17 | v0.2 / user build log | app/build.gradle.kts, project records | Build log confirms Java 1.8 versus Kotlin 22; fix pending build verification |
+| BWC-CHG-003 | IMPLEMENTED / BUILD RETEST PENDING | Fix reported Kotlin/Java JVM-target mismatch by explicitly aligning Android Java and Kotlin compilation to JVM 17; bump app version to 0.3 | v0.2 / user build log | app/build.gradle.kts, project records | Configuration committed; user must rerun build to verify |
 
 ## Scope controls
 - Changes require a Change ID, request, baseline and scope before edits.
@@ -24,3 +24,11 @@ Baseline: v0.2
 - No GPS permission; no fake weather values are supplied.
 - Verified all tracked files can be fetched from the branch; source-level review only, not a compiler check.
 - Not yet compiled, installed, emulator-tested or physical-device-tested.
+
+
+## BWC-CHG-003 implementation notes
+- Set Java sourceCompatibility and targetCompatibility to VERSION_17.
+- Set Kotlin jvmTarget to 17.
+- Incremented app versionName to 0.3; versionCode remains 1 because no release has been issued.
+- Preserved all other project source files byte-for-byte.
+- The uploaded build log is the baseline failure evidence; no local Android build environment is available here to rerun the Windows build.

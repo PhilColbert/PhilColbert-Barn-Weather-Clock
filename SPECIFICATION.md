@@ -11,7 +11,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 ## Fixed requirements
 - Native Kotlin Android AppWidget.
 - Three-column horizontal layout matching the approved reference image: clock/date on the left; current conditions in the middle; next-day forecast on the right.
-- Rounded dark slate panel with a restrained grey outline and subtle vertical separators. No blue-purple gradient border.
+- Rounded dark slate panel with a restrained grey outline and subtle vertical separators. No blue-purple gradient border. Minimum widget size 360 × 134dp; resize minimum 320 × 119dp to retain the approved reference proportions.
 - Clock shown at approximately 28sp with locale-aware date directly below.
 - Current conditions: weather icon on the left; small bold “Now” label beside the live current temperature; “Day” and “Night” temperatures on separate lines; wind speed followed by compass direction; date at the bottom of the column.
 - Forecast: weather icon on the left; “Day” and “Night” temperatures on separate lines; wind speed followed by compass direction; next-day date at the bottom of the column.

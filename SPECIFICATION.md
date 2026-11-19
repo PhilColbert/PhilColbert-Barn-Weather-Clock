@@ -1,7 +1,7 @@
 # Barn Weather Clock — Project Specification
 
 **Project ID:** BWC-001  
-**Baseline:** v0.5  
+**Baseline:** v0.6  
 **Status:** v0.2 implementation baseline  
 **Date:** 2026-11-19
 
@@ -23,7 +23,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - Compact horizontal widget: time/date on the left, current and next-day weather columns to the right.
 - Weather values displayed must come from a live provider; mock-ups must be labelled illustrative.
 - Weather location must be configurable; no private precise address is hard-coded.
-- Configuration offers an optional one-shot current-device-location action to populate latitude/longitude; manual coordinate entry remains available.
+- Configuration offers an optional current-device-location action using Google's fused location provider to populate latitude/longitude; manual coordinate entry remains available. The configuration screen displays the installed app version.
 - Temperature display unit: Celsius.
 - Wind speed display unit: mph.
 
@@ -44,7 +44,8 @@ A native Android home-screen widget showing current time/date, current outdoor w
 
 ## Unresolved items
 - **FIXED for v0.2:** Manual latitude/longitude entry remains available.
-- **FIXED for v0.4:** Optional one-shot current-device location retrieval in the configuration screen. The app requests foreground coarse/fine location permission only when the user taps the location button; it does not continuously track location. GPS provider is eligible with either permission level; Android may reduce coordinate precision when only approximate permission is granted. A fresh cached fix is used where available, otherwise the screen listens for a single update and stops after the first fix or timeout. The retrieved coordinates populate the fields and are applied only after Save settings.
+- **FIXED for v0.4:** Optional one-shot current-device location retrieval in the configuration screen. The app requests foreground coarse/fine location permission only when the user taps the location button; it does not continuously track location. GPS provider is eligible with either permission level; Android may reduce coordinate precision when only approximate permission is granted. The fused provider uses a recent cached fix where available, otherwise requests a current fix and falls back to a bounded single update. The screen stops location requests after success or failure. The retrieved coordinates populate the fields and are applied only after Save settings.
+- **FIXED for v0.6:** The settings screen displays `Barn Weather Clock v{versionName}` from the app build metadata.
 - **UNRESOLVED:** Reverse geocoding of coordinates into a human-readable place name is not implemented.
 - **UNRESOLVED:** Primary Android device model and Android API level for device testing.
 - **PROPOSED:** Default slate background with 20% transparency.

@@ -102,7 +102,7 @@ Baseline: v0.9
 ## BWC-CHG-013 — approved scope and implementation record
 - **Request:** Recreate the approved visual reference as the actual native Android widget.
 - **Baseline:** v0.9 at commit 496bbe4b7282fa4ae2b981c3adece4bec24a66ac.
-- **Scope:** Three balanced columns; rounded dark panel with blue-purple edge and vertical dividers; larger clock; current and forecast dates at the top of their columns; weather icons beside temperature details; each high/low pair on one line separated by `/`; wind glyph and direction-first wind text; retain live current temperature with the small Now label; preserve weather provider, location, refresh, configuration and background colour/transparency preferences.
+- **Scope:** Three balanced columns; rounded dark panel with blue-purple edge and vertical dividers; larger clock; current and forecast dates at the top of their columns; weather icons beside temperature details; each high/low pair on one line separated by `/`; wind glyph and direction-first wind text plus current and forecast gust rows; retain live current temperature with the small Now label; preserve weather provider, location, refresh, configuration and background colour/transparency preferences.
 - **Version:** v1.0 / versionCode 6.
 - **Files changed:** widget_barn_weather.xml, widget_frame.xml (new), barn_weather_widget_info.xml, BarnWeatherWidgetProvider.kt, WeatherData.kt, app/build.gradle.kts, android-build.yml, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md.
-- **Validation:** Source committed on feature/android-starter; CI build and visual/device checks pending. Other project files are carried forward unchanged and are not claimed rebuilt or tested.
+- **Validation:** Source committed on feature/android-starter; Open-Meteo wind-gust fields are documented by the provider; CI build and visual/device checks pending. Other project files are carried forward unchanged and are not claimed rebuilt or tested.

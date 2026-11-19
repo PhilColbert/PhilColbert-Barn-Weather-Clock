@@ -1,3 +1,12 @@
+## v0.5 — 2026-11-19
+- BWC-CHG-005: Corrected provider selection so GPS is used when enabled even when Android grants approximate/coarse location permission. Android controls the precision returned.
+- Replaced the API 30+ one-shot callback path with a single location-update listener, matching the legacy path and avoiding reliance on a null-prone one-shot result.
+- Uses a recent cached fix (up to two minutes old) immediately when available; otherwise listens for a fix, then unregisters. A 30-second timeout reports failure.
+- The listener is removed on success, timeout, provider disable or Activity destruction; no ongoing/background tracking.
+- Toast now reports provider, coordinate accuracy and actionable errors.
+- Incremented app versionName to 0.5; versionCode remains 1 because no release has been issued.
+- GitHub source and record fetch verification only. Android compilation and physical-device GPS test remain pending.
+
 ## v0.4 — 2026-11-19
 - BWC-CHG-004: Added a "Use current device location" button to widget configuration.
 - Added foreground coarse/fine location permission declarations and runtime permission handling; permission is requested only after the user taps the button.

@@ -5,7 +5,15 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Locale
 
-data class DayWeather(val date: String, val temperature: Int, val code: Int, val windMph: Int, val windDirection: String)
+data class DayWeather(
+    val date: String,
+    val temperature: Int,
+    val dayTemperature: Int,
+    val nightTemperature: Int,
+    val code: Int,
+    val windMph: Int,
+    val windDirection: String
+)
 data class WeatherSnapshot(val current: DayWeather, val nextDay: DayWeather)
 
 object WeatherData {
@@ -13,7 +21,7 @@ object WeatherData {
         val endpoint = "https://api.open-meteo.com/v1/forecast" +
             "?latitude=$latitude&longitude=$longitude" +
             "&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m" +
-            "&daily=weather_code,temperature_2m_max,wind_speed_10m_max,wind_direction_10m_dominant" +
+            "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant" +
             "&timezone=auto&forecast_days=2&temperature_unit=celsius&wind_speed_unit=mph"
         val connection = URL(endpoint).openConnection() as HttpURLConnection
         connection.connectTimeout = 10000
@@ -23,23 +31,36 @@ object WeatherData {
             val json = JSONObject(body)
             val current = json.getJSONObject("current")
             val daily = json.getJSONObject("daily")
+            val dates = daily.getJSONArray("time")
+            val highs = daily.getJSONArray("temperature_2m_max")
+            val lows = daily.getJSONArray("temperature_2m_min")
+            val codes = daily.getJSONArray("weather_code")
+            val windSpeeds = daily.getJSONArray("wind_speed_10m_max")
+            val windDirections = daily.getJSONArray("wind_direction_10m_dominant")
+
             val currentWeather = DayWeather(
                 current.optString("time").take(10),
                 current.getDouble("temperature_2m").toInt(),
+                highs.getDouble(0).toInt(),
+                lows.getDouble(0).toInt(),
                 current.getInt("weather_code"),
                 current.getDouble("wind_speed_10m").toInt(),
                 compass(current.getDouble("wind_direction_10m"))
             )
             val nextWeather = DayWeather(
-                daily.getJSONArray("time").getString(1),
-                daily.getJSONArray("temperature_2m_max").getDouble(1).toInt(),
-                daily.getJSONArray("weather_code").getInt(1),
-                daily.getJSONArray("wind_speed_10m_max").getDouble(1).toInt(),
-                compass(daily.getJSONArray("wind_direction_10m_dominant").getDouble(1))
+                dates.getString(1),
+                highs.getDouble(1).toInt(),
+                highs.getDouble(1).toInt(),
+                lows.getDouble(1).toInt(),
+                codes.getInt(1),
+                windSpeeds.getDouble(1).toInt(),
+                compass(windDirections.getDouble(1))
             )
             return WeatherSnapshot(currentWeather, nextWeather)
         } finally { connection.disconnect() }
     }
+
+    fun dayNightLabel(day: Int, night: Int): String = "Day $day° / Night $night°"
 
     fun icon(code: Int): String = when (code) {
         0 -> "☀"; 1, 2 -> "🌤"; 3 -> "☁"; 45, 48 -> "🌫"

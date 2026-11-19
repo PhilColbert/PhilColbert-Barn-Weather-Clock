@@ -2,12 +2,12 @@
 
 Native Android home-screen widget built with Kotlin and Android AppWidget APIs.
 
-## Included in v0.4
+## Included in v0.5
 - Large Android TextClock and locale-aware date.
 - Live current outdoor conditions and next-calendar-day forecast from Open-Meteo.
 - Temperature, condition symbol, wind speed in mph and compass direction.
 - Manual latitude/longitude configuration, plus an optional one-shot current-device location button in settings.
-- Runtime foreground location permission is requested only when the location button is tapped; coordinates are filled into the fields and applied when Save settings is pressed.
+- Runtime foreground location permission is requested only when the location button is tapped; coordinates are filled into the fields and applied when Save settings is pressed. GPS can be used with approximate permission (Android reduces precision); the app uses a fresh cached fix or waits for one update, then stops requesting location.
 - Background colour presets and adjustable transparency.
 - Periodic weather refresh through WorkManager (30-minute interval).
 - Resizable widget and dedicated configuration Activity.

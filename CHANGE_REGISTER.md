@@ -18,6 +18,7 @@ Baseline: v0.2
 ## BWC-CHG-002 implementation notes
 - Added Kotlin AppWidget provider, configuration Activity, Open-Meteo client and WorkManager refresh worker.
 - Added compact horizontal widget layout with 48sp clock, current weather and next-day forecast.
-- Added manual coordinate entry, background presets and transparency slider.
+- Added manual coordinate entry with signed decimal input, background presets, transparency slider and Open-Meteo attribution in configuration.
 - No GPS permission; no fake weather values are supplied.
+- Verified all tracked files can be fetched from the branch; source-level review only, not a compiler check.
 - Not yet compiled, installed, emulator-tested or physical-device-tested.

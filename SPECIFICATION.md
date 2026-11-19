@@ -1,8 +1,8 @@
 # Barn Weather Clock — Project Specification
 
 **Project ID:** BWC-001  
-**Baseline:** v0.1  
-**Status:** Initial specification  
+**Baseline:** v0.2  
+**Status:** v0.2 implementation baseline  
 **Date:** 2026-11-19
 
 ## Purpose
@@ -41,11 +41,11 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - No “Tomorrow” label, no +1 day label, no settings icon.
 
 ## Unresolved items
-- **UNRESOLVED:** Default weather location mode (device location or manually entered saved location).
+- **FIXED for v0.2:** Manually entered latitude/longitude; no device location permission. GPS and geocoding remain future options.
 - **UNRESOLVED:** Primary Android device model and Android API level for device testing.
-- **UNRESOLVED:** Default background colour and transparency.
+- **PROPOSED:** Default slate background with 20% transparency.
 - **UNRESOLVED:** Minimum widget dimensions and launcher resize behaviour.
-- **UNRESOLVED:** Preferred date formatting.
+- **FIXED for v0.2:** Locale-aware `EEE d MMM` date display.
 
 ## Acceptance criteria
 1. Widget can be added from the Android widget picker.

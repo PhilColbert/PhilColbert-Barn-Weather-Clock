@@ -12,7 +12,8 @@ data class DayWeather(
     val nightTemperature: Int,
     val code: Int,
     val windMph: Int,
-    val windDirection: String
+    val windDirection: String,
+    val gustMph: Int
 )
 data class WeatherSnapshot(val current: DayWeather, val nextDay: DayWeather)
 
@@ -20,8 +21,8 @@ object WeatherData {
     fun fetch(latitude: Double, longitude: Double): WeatherSnapshot {
         val endpoint = "https://api.open-meteo.com/v1/forecast" +
             "?latitude=$latitude&longitude=$longitude" +
-            "&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m" +
-            "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant" +
+            "&current=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m" +
+            "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant" +
             "&timezone=auto&forecast_days=2&temperature_unit=celsius&wind_speed_unit=mph"
         val connection = URL(endpoint).openConnection() as HttpURLConnection
         connection.connectTimeout = 10000
@@ -36,6 +37,7 @@ object WeatherData {
             val lows = daily.getJSONArray("temperature_2m_min")
             val codes = daily.getJSONArray("weather_code")
             val windSpeeds = daily.getJSONArray("wind_speed_10m_max")
+            val gusts = daily.getJSONArray("wind_gusts_10m_max")
             val windDirections = daily.getJSONArray("wind_direction_10m_dominant")
             val currentWeather = DayWeather(
                 current.optString("time").take(10),
@@ -44,7 +46,8 @@ object WeatherData {
                 lows.getDouble(0).toInt(),
                 current.getInt("weather_code"),
                 current.getDouble("wind_speed_10m").toInt(),
-                compass(current.getDouble("wind_direction_10m"))
+                compass(current.getDouble("wind_direction_10m")),
+                current.getDouble("wind_gusts_10m").toInt()
             )
             val nextWeather = DayWeather(
                 dates.getString(1),
@@ -53,7 +56,8 @@ object WeatherData {
                 lows.getDouble(1).toInt(),
                 codes.getInt(1),
                 windSpeeds.getDouble(1).toInt(),
-                compass(windDirections.getDouble(1))
+                compass(windDirections.getDouble(1)),
+                gusts.getDouble(1).toInt()
             )
             return WeatherSnapshot(currentWeather, nextWeather)
         } finally { connection.disconnect() }

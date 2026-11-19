@@ -1,7 +1,7 @@
 # Change Register
 
 Project: Barn Weather Clock (BWC-001)  
-Baseline: v0.6
+Baseline: v0.7
 
 | Change ID | Status | Request / scope | Baseline | Files | Result |
 |---|---|---|---|---|---|
@@ -20,7 +20,7 @@ Baseline: v0.6
 - Do not describe proposed or mock data as live data.
 
 
-## BWC-CHG-002 implementation notes
+## BWC-CHG-007 implementation notes\n- Reduced the widget TextClock from 48sp to 32sp following user feedback that the time was too large.\n- Incremented versionName to 0.7 and versionCode to 3 so Android recognises this update over v0.6 (versionCode 2).\n- Corrected the v0.6 record: its actual Gradle versionCode was 2, not 1.\n- Updated specification, manifest, version history and README.\n- Source/record fetch verification pending; no Android compilation, emulator or device test performed.\n\n## BWC-CHG-002 implementation notes
 - Added Kotlin AppWidget provider, configuration Activity, Open-Meteo client and WorkManager refresh worker.
 - Added compact horizontal widget layout with 48sp clock, current weather and next-day forecast.
 - Added manual coordinate entry with signed decimal input, background presets, transparency slider and Open-Meteo attribution in configuration.
@@ -50,7 +50,7 @@ Baseline: v0.6
 - If the current-location request returns null or fails, requests a single fused location update for up to 30 seconds.
 - Displays location progress and error status in the settings screen; coordinates populate the existing fields and still require Save settings.
 - Displays the installed version dynamically as "Barn Weather Clock v" plus BuildConfig.VERSION_NAME at the bottom of settings.
-- Incremented versionName to 0.6; versionCode remains 1 because no release has been issued.
+- Incremented versionName to 0.6; versionCode incremented to 2 so Android recognises the update over the previous install.
 - Source and records fetched from GitHub for verification; compilation and physical-device location testing are not yet performed.
 
 | BWC-CHG-007 | APPROVED / IN PROGRESS | Reduce the widget's oversized clock from 48sp to 32sp; align the specification and correct the v0.6 versionCode record | v0.6 | app/src/main/res/layout/widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before implementation; source/build/device checks pending |

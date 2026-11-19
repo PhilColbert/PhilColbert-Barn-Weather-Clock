@@ -1,3 +1,5 @@
+# Version History
+
 ## v0.5 — 2026-11-19
 - BWC-CHG-005: Corrected provider selection so GPS is used when enabled even when Android grants approximate/coarse location permission. Android controls the precision returned.
 - Replaced the API 30+ one-shot callback path with a single location-update listener, matching the legacy path and avoiding reliance on a null-prone one-shot result.
@@ -15,8 +17,6 @@
 - Added a timeout for the legacy single-update path on Android 8–10.
 - Incremented app versionName to 0.4; versionCode remains 1 because no release has been issued.
 - GitHub source commit/fetch verification only; compilation and device testing remain pending.
-
-# Version History
 
 ## v0.3 — 2026-11-19
 - BWC-CHG-003: Fixed the reported Java/Kotlin JVM target mismatch by explicitly setting both compilation targets to JVM 17.

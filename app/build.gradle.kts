@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 android {
+    buildFeatures { buildConfig = true }
     namespace = "uk.co.barnweatherclock"
     compileSdk = 35
     defaultConfig {

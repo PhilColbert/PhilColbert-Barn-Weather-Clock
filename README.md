@@ -5,7 +5,7 @@ Native Android home-screen widget built with Kotlin and Android AppWidget APIs.
 ## Included in v1.0
 - Large 42sp Android TextClock, in the left column of a three-column layout and locale-aware date.
 - Live current outdoor conditions and next-calendar-day forecast from Open-Meteo.
-- Approved dark rounded panel with blue-purple border and dividers; current weather and next-day forecast occupy wider, balanced columns. Weather dates sit at the top, icons sit beside the details, and high/low temperatures appear on one line separated by `/`. The live current temperature remains beside a small Now label. Wind rows show direction and speed in mph.
+- Approved dark rounded panel with blue-purple border and dividers; current weather and next-day forecast occupy wider, balanced columns. Weather dates sit at the top, icons sit beside the details, and high/low temperatures appear on one line separated by `/`. The live current temperature remains beside a small Now label. Wind rows show direction and speed in mph, with a second row for current and forecast gusts.
 - Manual latitude/longitude configuration, plus an optional one-shot current-device location button in settings.
 - Runtime foreground location permission is requested only when the location button is tapped; coordinates are filled into the fields and applied when Save settings is pressed. Uses Google Fused Location Provider, combining available location sources. It checks for a recent cached fix, then requests a current fix with a bounded update fallback. A status line explains progress or failure. The settings screen displays the installed app version at the bottom.
 - Background colour presets and adjustable transparency.

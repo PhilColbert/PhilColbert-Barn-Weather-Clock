@@ -97,6 +97,21 @@ class WidgetConfigActivity : Activity() {
             text = "Save settings"
             setOnClickListener { saveSettings() }
         })
+        root.addView(Button(this).apply {
+            text = "Remove widget"
+            setOnClickListener {
+                android.app.AlertDialog.Builder(this@WidgetConfigActivity)
+                    .setTitle("Remove Barn Weather Clock")
+                    .setMessage("Android does not let an app delete a widget from its home-screen host. To remove it, return to your home screen, press and hold the Barn Weather Clock widget, then choose Remove (or drag it to Remove).")
+                    .setPositiveButton("Got it", null)
+                    .show()
+            }
+        })
+        root.addView(TextView(this).apply {
+            text = "To return here at any time, simply tap the widget."
+            textSize = 13f
+            setPadding(0, 10, 0, 0)
+        })
         root.addView(TextView(this).apply {
             text = "Weather data provided by Open-Meteo"
             textSize = 12f

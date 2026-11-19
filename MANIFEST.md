@@ -17,7 +17,8 @@
 | MANIFEST.md | v1.1 file and verification register |
 | VERSION_HISTORY.md | v1.1 change record |
 | README.md | v1.1 behaviour and usage |
-| app/src/main/res/layout/widget_barn_weather.xml | Reworked three-column widget to match approved screenshot |
+| app/src/main/res/layout/widget_barn_weather.xml | Reworked three-column widget to match approved screenshot
+| app/src/main/res/xml/barn_weather_widget_info.xml | Minimum size 360 × 134dp; resize minimum 320 × 119dp to match reference proportions |
 | app/src/main/res/drawable/widget_frame.xml | Solid slate panel with restrained outline and rounded corners |
 | app/src/main/java/uk/co/barnweatherclock/BarnWeatherWidgetProvider.kt | Widget-wide tap opens its own settings; current/forecast rows match screenshot |
 | app/src/main/java/uk/co/barnweatherclock/WidgetConfigActivity.kt | Adds visible removal guidance; retains location and appearance settings |

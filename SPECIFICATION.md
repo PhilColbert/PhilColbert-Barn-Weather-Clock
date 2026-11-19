@@ -1,8 +1,8 @@
 # Barn Weather Clock — Project Specification
 
 **Project ID:** BWC-001  
-**Baseline:** v0.6  
-**Status:** v0.6 implementation baseline  
+**Baseline:** v0.7  
+**Status:** v0.7 implementation baseline  
 **Date:** 2026-11-19
 
 ## Purpose
@@ -11,7 +11,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 ## Fixed requirements
 - Native Android AppWidget, not a shortcut or web page.
 - Kotlin implementation using Android AppWidget APIs.
-- Current time is prominent; current design target is **48sp**.
+- Current time is prominent; current design target is **32sp**.
 - Current date appears beneath the time.
 - Current conditions: weather icon, temperature, wind speed in mph, compass direction, and date.
 - Next-day forecast uses the same icon-left / details-right arrangement as current weather.
@@ -37,7 +37,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 
 ## Approved layout baseline
 - Single-line horizontal widget.
-- Left: large 48sp current time, current date below.
+- Left: prominent 32sp current time, current date below.
 - Middle: current weather icon on the left; temperature, wind speed/direction and current date on the right.
 - Right: next-day forecast icon on the left; temperature, wind speed/direction and forecast date on the right.
 - No “Tomorrow” label, no +1 day label, no settings icon.

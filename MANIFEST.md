@@ -5,8 +5,8 @@
 **Repository:** https://github.com/PhilColbert/PhilColbert-Barn-Weather-Clock
 **Working branch:** feature/android-starter
 **Default branch:** main
-**Version:** v0.8
-**Status:** v0.8 debug APK built successfully by GitHub Actions and downloaded; physical-device verification pending
+**Version:** v0.9
+**Status:** v0.9 source updated on feature branch; CI build and physical-device verification pending
 
 ## Tracked files
 
@@ -20,11 +20,11 @@
 | `.github/workflows/android-build.yml` | v0.8 | Builds debug APK on feature-branch pushes and uploads a 14-day workflow artifact |
 | `build.gradle.kts` | v0.2 | New Android project file |
 | `gradle.properties` | v0.2 | New Android project file |
-| `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; fused location dependency and app versionName 0.8 and versionCode 4 in BWC-CHG-008/009 |
+| `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; fused location dependency and app versionName 0.9 and versionCode 5 in BWC-CHG-012 |
 | `app/src/main/AndroidManifest.xml` | v0.2/v0.4 | Added foreground coarse/fine location permission declarations in BWC-CHG-004; unchanged in v0.5 |
 | `app/src/main/res/xml/barn_weather_widget_info.xml` | v0.2 | New Android project file |
 | `app/src/main/res/values/strings.xml` | v0.2 | New Android project file |
-| `app/src/main/res/layout/widget_barn_weather.xml` | v0.2/v0.7/v0.8 | Clock 32sp; current-weather date d MMM; day/night temperatures in both weather columns |
+| `app/src/main/res/layout/widget_barn_weather.xml` | v0.2/v0.7/v0.8 | Clock 32sp; current-weather date d MMM; small NOW label inline with live temperature; unlabeled two-line high/low pairs in both weather columns |
 | `app/src/main/java/uk/co/barnweatherclock/WeatherData.kt` | v0.2 | New Android project file |
 | `app/src/main/java/uk/co/barnweatherclock/BarnWeatherWidgetProvider.kt` | v0.2 | New Android project file |
 | `app/src/main/java/uk/co/barnweatherclock/WeatherRefresh.kt` | v0.2 | New Android project file |
@@ -48,3 +48,5 @@
 - Debug APK produced by CI; no physical-device installation or visual test has been performed.
 - Visual baseline screenshots and matching after-change screenshots are not yet available; no emulator/device has been supplied or tested.
 - Build, runtime and launcher compatibility remain unverified.
+
+- BWC-CHG-012: live temperature now shares a line with a smaller NOW label; the label is hidden in unavailable/error states. Two unlabeled high/low values remain below. The v0.9 source is pending CI build and device testing.

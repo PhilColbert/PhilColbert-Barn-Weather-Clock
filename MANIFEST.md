@@ -5,8 +5,8 @@
 **Repository:** https://github.com/PhilColbert/PhilColbert-Barn-Weather-Clock
 **Working branch:** feature/android-starter
 **Default branch:** main
-**Version:** v0.9
-**Status:** v0.9 source updated on feature branch; CI build and physical-device verification pending
+**Version:** v1.0
+**Status:** v1.0 source updated on feature branch; CI build and physical-device verification pending
 
 ## Tracked files
 
@@ -17,14 +17,14 @@
 | MANIFEST.md | v0.1/v0.2 | This file |
 | VERSION_HISTORY.md | v0.1/v0.2 | Version record |
 | `settings.gradle.kts` | v0.2 | New Android project file |
-| `.github/workflows/android-build.yml` | v0.8 | Builds debug APK on feature-branch pushes and uploads a 14-day `barn-weather-clock-v0.9-debug` artifact |
+| `.github/workflows/android-build.yml` | v0.8 | Builds debug APK on feature-branch pushes and uploads a 14-day `barn-weather-clock-v1.0-debug` artifact |
 | `build.gradle.kts` | v0.2 | New Android project file |
 | `gradle.properties` | v0.2 | New Android project file |
-| `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; fused location dependency and app versionName 0.9 and versionCode 5 in BWC-CHG-012 |
+| `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; fused location dependency and app versionName 1.0 and versionCode 6 in BWC-CHG-013 |
 | `app/src/main/AndroidManifest.xml` | v0.2/v0.4 | Added foreground coarse/fine location permission declarations in BWC-CHG-004; unchanged in v0.5 |
 | `app/src/main/res/xml/barn_weather_widget_info.xml` | v0.2 | New Android project file |
 | `app/src/main/res/values/strings.xml` | v0.2 | New Android project file |
-| `app/src/main/res/layout/widget_barn_weather.xml` | v0.2/v0.7/v0.8 | Clock 32sp; current-weather date d MMM; small Now label inline with live temperature; unlabeled two-line high/low pairs in both weather columns |
+| `app/src/main/res/drawable/widget_frame.xml` | v1.0 | Rounded blue-purple gradient border frame |\n| `app/src/main/res/layout/widget_barn_weather.xml` | v0.2/v0.7/v0.8/v1.0 | Three-column layout; 42sp clock; top-aligned weather dates; slash-separated high/low pairs |
 | `app/src/main/java/uk/co/barnweatherclock/WeatherData.kt` | v0.2 | New Android project file |
 | `app/src/main/java/uk/co/barnweatherclock/BarnWeatherWidgetProvider.kt` | v0.2 | New Android project file |
 | `app/src/main/java/uk/co/barnweatherclock/WeatherRefresh.kt` | v0.2 | New Android project file |

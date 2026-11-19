@@ -10,7 +10,7 @@ android {
         minSdk = 26
         targetSdk = 35
         versionCode = 1
-        versionName = "0.5"
+        versionName = "0.6"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -20,4 +20,7 @@ android {
         jvmTarget = "17"
     }
 }
-dependencies { implementation("androidx.work:work-runtime-ktx:2.10.0") }
+dependencies {
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+}

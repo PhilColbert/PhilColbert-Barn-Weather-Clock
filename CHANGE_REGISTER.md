@@ -1,7 +1,7 @@
 # Change Register
 
 Project: Barn Weather Clock (BWC-001)  
-Baseline: v0.7
+Baseline: v0.8
 
 | Change ID | Status | Request / scope | Baseline | Files | Result |
 |---|---|---|---|---|---|
@@ -20,7 +20,15 @@ Baseline: v0.7
 - Do not describe proposed or mock data as live data.
 
 
-## BWC-CHG-007 implementation notes\n- Reduced the widget TextClock from 48sp to 32sp following user feedback that the time was too large.\n- Incremented versionName to 0.7 and versionCode to 3 so Android recognises this update over v0.6 (versionCode 2).\n- Corrected the v0.6 record: its actual Gradle versionCode was 2, not 1.\n- Updated specification, manifest, version history and README.\n- Source/record fetch verification pending; no Android compilation, emulator or device test performed.\n\n## BWC-CHG-002 implementation notes
+## BWC-CHG-007 implementation notes\n- Reduced the widget TextClock from 48sp to 32sp following user feedback that the time was too large.\n- Incremented versionName to 0.7 and versionCode to 3 so Android recognises this update over v0.6 (versionCode 2).\n- Corrected the v0.6 record: its actual Gradle versionCode was 2, not 1.\n- Updated specification, manifest, version history and README.\n- Source/record fetch verification pending; no Android compilation, emulator or device test performed.\n\n## BWC-CHG-008 / BWC-CHG-009 implementation notes
+- Open-Meteo daily data now requests temperature_2m_max and temperature_2m_min for the current date and following date.
+- Current-weather column retains the live instantaneous temperature and adds today's Day maximum and Night minimum.
+- Forecast column displays the next day's Day maximum and Night minimum.
+- Day and night values are displayed on separate lines; current date is d MMM without weekday. The large clock's date remains unchanged.
+- Incremented versionName from 0.7 to 0.8 and versionCode from 3 to 4 for Android update recognition.
+- Source was committed in incremental file updates; final fetch verification and build checks pending. No APK or device test is claimed.
+
+## BWC-CHG-002 implementation notes
 - Added Kotlin AppWidget provider, configuration Activity, Open-Meteo client and WorkManager refresh worker.
 - Added compact horizontal widget layout with 48sp clock, current weather and next-day forecast.
 - Added manual coordinate entry with signed decimal input, background presets, transparency slider and Open-Meteo attribution in configuration.
@@ -55,6 +63,6 @@ Baseline: v0.7
 
 | BWC-CHG-007 | APPROVED / IN PROGRESS | Reduce the widget's oversized clock from 48sp to 32sp; align the specification and correct the v0.6 versionCode record | v0.6 | app/src/main/res/layout/widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before implementation; source/build/device checks pending |
 
-| BWC-CHG-008 | APPROVED / IN PROGRESS | Add live daytime maximum and nighttime minimum temperatures for today and the next-day forecast; retain current conditions, wind, icons and dates | v0.7 | WeatherData.kt, BarnWeatherWidgetProvider.kt, widget_barn_weather.xml, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before edits; API parsing, source and build checks pending |
+| BWC-CHG-008 | IMPLEMENTED / BUILD VERIFICATION PENDING | Add daily maximum and minimum temperatures for today and the next-day forecast, while retaining the live current temperature and existing weather details | v0.7 | WeatherData.kt, BarnWeatherWidgetProvider.kt, widget_barn_weather.xml, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Open-Meteo daily high/low parsing and widget display implemented; source verification pending; not compiled/device-tested |
 
-| BWC-CHG-009 | APPROVED / IN PROGRESS | Remove weekday from the current-weather date, showing only day/month; prepare a new installable app version including BWC-CHG-008 | v0.7 partial BWC-CHG-008 source | widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before edits; Android build and device verification pending |
+| BWC-CHG-009 | IMPLEMENTED / BUILD VERIFICATION PENDING | Remove weekday from the current-weather date, showing only day/month; package the combined changes as v0.8 | v0.7 / partial BWC-CHG-008 source | widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Current-weather date format set to d MMM; app versionName 0.8/versionCode 4; source verification pending; not compiled/device-tested |

@@ -38,8 +38,8 @@ A native Android home-screen widget showing current time/date, current outdoor w
 ## Approved layout baseline
 - Single-line horizontal widget.
 - Left: prominent 32sp current time, current date below.
-- Middle: current weather icon on the left; live temperature, two unlabeled temperature values, wind speed/direction and current date (d MMM, no weekday) on the right.
-- Right: next-day forecast icon on the left; day/night high and low, wind speed/direction and forecast date on the right.
+- Middle: current weather icon on the left; a small “NOW” label immediately beside the larger live temperature on one line, followed by two unlabeled temperature values, wind speed/direction and current date (d MMM, no weekday) on the right.
+- Right: next-day forecast icon on the left; two unlabeled temperature values, wind speed/direction and forecast date on the right.
 - No “Tomorrow” label, no +1 day label, no settings icon.
 
 ## Unresolved items

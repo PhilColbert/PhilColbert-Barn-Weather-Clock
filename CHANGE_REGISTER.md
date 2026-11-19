@@ -1,7 +1,7 @@
 # Change Register
 
 Project: Barn Weather Clock (BWC-001)  
-Baseline: v0.5
+Baseline: v0.6
 
 | Change ID | Status | Request / scope | Baseline | Files | Result |
 |---|---|---|---|---|---|
@@ -11,7 +11,7 @@ Baseline: v0.5
 | BWC-CHG-003 | IMPLEMENTED / USER BUILD VERIFIED | Fix reported Kotlin/Java JVM-target mismatch by explicitly aligning Android Java and Kotlin compilation to JVM 17; bump app version to 0.3 | v0.2 / user build log | app/build.gradle.kts, project records | User reports the project now works; build/runtime details not independently inspected |
 | BWC-CHG-004 | IMPLEMENTED / USER DEVICE ISSUE REPORTED | Add a configuration-screen action to obtain the device's current location and populate latitude/longitude, with runtime permission handling and a manual-entry fallback; bump app version to 0.4 | v0.3 (user-confirmed working) | AndroidManifest.xml, WidgetConfigActivity.kt, app/build.gradle.kts, project records | Source committed and fetched for verification; no local Android build or device test performed |
 | BWC-CHG-005 | IMPLEMENTED / USER DEVICE ISSUE REPORTED | Correct current-location retrieval: allow GPS provider with approximate permission, use a recent cached fix or a single location update, add a timeout and improve diagnostics; bump app version to 0.5 | v0.4 / user report: device shows GPS lock but coordinate fields remain blank | WidgetConfigActivity.kt, app/build.gradle.kts, project records | Updated source committed and fetched for verification; no local Android build or device test performed |
-| BWC-CHG-006 | APPROVED / IN PROGRESS | Replace LocationManager-only acquisition with Google fused location (cached/current request plus bounded update fallback); show app version dynamically in widget configuration; bump app version to 0.6 | v0.5 / user reports location remains waiting for fix | WidgetConfigActivity.kt, app/build.gradle.kts, project records | Change logged before edits; build and device tests pending |
+| BWC-CHG-006 | IMPLEMENTED / BUILD & DEVICE TEST PENDING | Replace LocationManager-only acquisition with Google fused location (cached/current request plus bounded update fallback); show app version dynamically in widget configuration; bump app version to 0.6 | v0.5 / user reports location remains waiting for fix | WidgetConfigActivity.kt, app/build.gradle.kts, project records | Fused location implementation, dependency and version label committed and fetched for verification; Android build/device tests pending |
 
 ## Scope controls
 - Changes require a Change ID, request, baseline and scope before edits.
@@ -43,3 +43,12 @@ Baseline: v0.5
 - Populates coordinate fields; user must still press Save settings to persist and refresh the widget. Manual entry remains available.
 - Added a 20-second timeout to the legacy Android 8–10 single-update path.
 - Source files committed and fetched successfully from the feature branch; compile/runtime testing remains pending.
+
+## BWC-CHG-006 implementation notes
+- Added Google Play Services Location dependency 21.3.0 and enabled generated BuildConfig metadata.
+- Replaced direct LocationManager polling with FusedLocationProviderClient using high-accuracy current location with a 120-second maximum cached age and 20-second request duration.
+- If the current-location request returns null or fails, requests a single fused location update for up to 30 seconds.
+- Displays location progress and error status in the settings screen; coordinates populate the existing fields and still require Save settings.
+- Displays the installed version dynamically as "Barn Weather Clock v" plus BuildConfig.VERSION_NAME at the bottom of settings.
+- Incremented versionName to 0.6; versionCode remains 1 because no release has been issued.
+- Source and records fetched from GitHub for verification; compilation and physical-device location testing are not yet performed.

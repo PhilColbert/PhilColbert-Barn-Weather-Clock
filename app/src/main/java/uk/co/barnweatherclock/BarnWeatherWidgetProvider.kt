@@ -1,9 +1,11 @@
 package uk.co.barnweatherclock
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.widget.RemoteViews
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
@@ -37,33 +39,45 @@ class BarnWeatherWidgetProvider : AppWidgetProvider() {
             ids.forEach { id ->
                 val views = RemoteViews(context.packageName, R.layout.widget_barn_weather)
                 views.setInt(R.id.widget_panel, "setBackgroundColor",
-                    prefs.getInt("background_$id", 0xCC202833.toInt()))
+                    prefs.getInt("background_$id", 0xFF202A36.toInt()))
+
+                // The widget itself is the route back to this widget's settings.
+                val settingsIntent = Intent(context, WidgetConfigActivity::class.java).apply {
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
+                val settingsPendingIntent = PendingIntent.getActivity(
+                    context, id, settingsIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+                views.setOnClickPendingIntent(R.id.widget_root, settingsPendingIntent)
+
                 if (snapshot != null) {
                     views.setTextViewText(R.id.current_icon, WeatherData.icon(snapshot.current.code))
                     views.setViewVisibility(R.id.current_now, android.view.View.VISIBLE)
+                    views.setTextViewText(R.id.current_now, "Now")
                     views.setTextViewText(R.id.current_temp, snapshot.current.temperature.toString() + "°")
                     views.setTextViewText(R.id.current_daynight,
-                        WeatherData.temperaturePairLabel(snapshot.current.dayTemperature, snapshot.current.nightTemperature))
+                        "Day " + snapshot.current.dayTemperature + "°\nNight " + snapshot.current.nightTemperature + "°")
                     views.setTextViewText(R.id.current_wind,
-                        "≋ " + snapshot.current.windDirection + " " + snapshot.current.windMph + " mph")
-                    views.setTextViewText(R.id.current_gust, "⚑ " + snapshot.current.gustMph + " mph")
+                        snapshot.current.windMph.toString() + " mph " + snapshot.current.windDirection)
+                    views.setTextViewText(R.id.current_gust, WeatherData.displayDate(snapshot.current.date))
                     views.setTextViewText(R.id.forecast_icon, WeatherData.icon(snapshot.nextDay.code))
                     views.setTextViewText(R.id.forecast_temp,
-                        WeatherData.temperaturePairLabel(snapshot.nextDay.dayTemperature, snapshot.nextDay.nightTemperature))
+                        "Day " + snapshot.nextDay.dayTemperature + "°\nNight " + snapshot.nextDay.nightTemperature + "°")
                     views.setTextViewText(R.id.forecast_wind,
-                        "≋ " + snapshot.nextDay.windDirection + " " + snapshot.nextDay.windMph + " mph")
-                    views.setTextViewText(R.id.forecast_gust, "⚑ " + snapshot.nextDay.gustMph + " mph")
-                    views.setTextViewText(R.id.forecast_date, WeatherData.displayDate(snapshot.nextDay.date))
+                        snapshot.nextDay.windMph.toString() + " mph " + snapshot.nextDay.windDirection)
+                    views.setTextViewText(R.id.forecast_gust, WeatherData.displayDate(snapshot.nextDay.date))
                 } else {
                     views.setViewVisibility(R.id.current_now, android.view.View.GONE)
                     val configured = prefs.getString("latitude", null) != null
                     views.setTextViewText(R.id.current_temp, if (!configured) "Set location" else if (error) "Offline" else "Loading")
-                    views.setTextViewText(R.id.current_daynight, "--")
-                    views.setTextViewText(R.id.current_wind, if (!configured) "Configure widget" else "Weather unavailable")
-                    views.setTextViewText(R.id.current_gust, "-- mph")
-                    views.setTextViewText(R.id.forecast_temp, "--° / --°")
+                    views.setTextViewText(R.id.current_daynight, "Day --°\nNight --°")
+                    views.setTextViewText(R.id.current_wind, if (!configured) "Tap to configure" else "Weather unavailable")
+                    views.setTextViewText(R.id.current_gust, "")
+                    views.setTextViewText(R.id.forecast_temp, "Day --°\nNight --°")
                     views.setTextViewText(R.id.forecast_wind, "-- mph --")
-                    views.setTextViewText(R.id.forecast_gust, "-- mph")
+                    views.setTextViewText(R.id.forecast_gust, "")
                 }
                 manager.updateAppWidget(id, views)
             }

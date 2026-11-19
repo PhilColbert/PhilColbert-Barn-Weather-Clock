@@ -6,7 +6,7 @@
 **Working branch:** feature/android-starter
 **Default branch:** main
 **Version:** v0.8
-**Status:** v0.8 source and build workflow committed; GitHub Actions build in progress; device verification pending
+**Status:** v0.8 debug APK built successfully by GitHub Actions and downloaded; physical-device verification pending
 
 ## Tracked files
 
@@ -32,7 +32,8 @@
 | `README.md` | v0.2 | New Android project file |
 
 ## Integrity and test status
-- GitHub Actions workflow run 44540743045 was created for v0.8; Java setup completed and Android SDK setup was in progress at last inspection. APK build has not yet completed.
+- GitHub Actions workflow run 44540883299 completed successfully. Java 17, Android SDK setup, SDK package installation, Gradle 8.9, `assembleDebug` and artifact upload all succeeded.
+- APK artifact `barn-weather-clock-v0.8-debug` (artifact ID 14537997709, 2,947,260-byte ZIP) was downloaded; contained `app-debug.apk` (3,138,947 bytes). SHA-256: `f521a0701d29553a291b40117e4c4b5fa7b820476abe3ec3f7b8c8f8d7112208`.
 - Source files for v0.8 and project records were fetched from the feature branch after commit.
 - v0.8 includes daily high/low display for current day and next-day forecast, current-weather date without weekday, versionName 0.8 and versionCode 4.
 - Files not changed by BWC-CHG-008/009 are carried forward byte-for-byte from v0.7; they were not rebuilt or device-tested.
@@ -44,6 +45,6 @@
 - No files are claimed as rebuilt or device-tested.
 - JVM target correction v0.3 was reported working by the user.
 - v0.6 fused location and version label are committed; compilation and physical-device permission/location behaviour are awaiting user verification.
-- No APK has been produced by this workflow.
+- Debug APK produced by CI; no physical-device installation or visual test has been performed.
 - Visual baseline screenshots and matching after-change screenshots are not yet available; no emulator/device has been supplied or tested.
 - Build, runtime and launcher compatibility remain unverified.

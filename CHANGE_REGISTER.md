@@ -97,3 +97,12 @@ Baseline: v0.9
 
 - BWC-CHG-012 refinement: the live current temperature is displayed on the same line as a smaller “Now” label. The label is hidden while weather is unavailable. High/low values remain unlabeled on separate lines.
 - CI workflow artifact label updated to `barn-weather-clock-v0.9-debug` to match the package version.
+
+
+## BWC-CHG-013 — approved scope and implementation record
+- **Request:** Recreate the approved visual reference as the actual native Android widget.
+- **Baseline:** v0.9 at commit 496bbe4b7282fa4ae2b981c3adece4bec24a66ac.
+- **Scope:** Three balanced columns; rounded dark panel with blue-purple edge and vertical dividers; larger clock; current and forecast dates at the top of their columns; weather icons beside temperature details; each high/low pair on one line separated by `/`; wind glyph and direction-first wind text; retain live current temperature with the small Now label; preserve weather provider, location, refresh, configuration and background colour/transparency preferences.
+- **Version:** v1.0 / versionCode 6.
+- **Files changed:** widget_barn_weather.xml, widget_frame.xml (new), BarnWeatherWidgetProvider.kt, WeatherData.kt, app/build.gradle.kts, android-build.yml, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md.
+- **Validation:** Source committed on feature/android-starter; CI build and visual/device checks pending. Other project files are carried forward unchanged and are not claimed rebuilt or tested.

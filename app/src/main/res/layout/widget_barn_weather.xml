@@ -8,7 +8,7 @@
         android:gravity="center_vertical" android:orientation="vertical" android:paddingEnd="8dp">
         <TextClock android:id="@+id/time_text" android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:format12Hour="h:mm" android:format24Hour="HH:mm" android:textColor="#FFFFFFFF"
-            android:textSize="48sp" android:fontFamily="sans" android:includeFontPadding="false" />
+            android:textSize="32sp" android:fontFamily="sans" android:includeFontPadding="false" />
         <TextClock android:id="@+id/clock_date" android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:format12Hour="EEE d MMM" android:format24Hour="EEE d MMM"
             android:textColor="#FFE0E6ED" android:textSize="12sp" />

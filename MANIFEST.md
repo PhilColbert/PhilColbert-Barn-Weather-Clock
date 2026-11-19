@@ -6,7 +6,7 @@
 **Working branch:** feature/android-starter
 **Default branch:** main
 **Version:** v0.8
-**Status:** v0.8 day/night temperatures and date format committed; build/device verification pending
+**Status:** v0.8 source and build workflow committed; GitHub Actions build in progress; device verification pending
 
 ## Tracked files
 
@@ -17,6 +17,7 @@
 | MANIFEST.md | v0.1/v0.2 | This file |
 | VERSION_HISTORY.md | v0.1/v0.2 | Version record |
 | `settings.gradle.kts` | v0.2 | New Android project file |
+| `.github/workflows/android-build.yml` | v0.8 | Builds debug APK on feature-branch pushes and uploads a 14-day workflow artifact |
 | `build.gradle.kts` | v0.2 | New Android project file |
 | `gradle.properties` | v0.2 | New Android project file |
 | `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; fused location dependency and app versionName 0.8 and versionCode 4 in BWC-CHG-008/009 |
@@ -31,8 +32,12 @@
 | `README.md` | v0.2 | New Android project file |
 
 ## Integrity and test status
+- GitHub Actions workflow run 44540743045 was created for v0.8; Java setup completed and Android SDK setup was in progress at last inspection. APK build has not yet completed.
+- Source files for v0.8 and project records were fetched from the feature branch after commit.
 - v0.8 includes daily high/low display for current day and next-day forecast, current-weather date without weekday, versionName 0.8 and versionCode 4.
-- Files not changed by BWC-CHG-008/009 are carried forward byte-for-byte from v0.7; they were not rebuilt or device-tested.\n- v0.7 reduces the clock display to 32sp; versionName 0.7 and versionCode 3.\n- Files not changed by BWC-CHG-007 are carried forward byte-for-byte from v0.6; they were not rebuilt or device-tested.
+- Files not changed by BWC-CHG-008/009 are carried forward byte-for-byte from v0.7; they were not rebuilt or device-tested.
+- v0.7 reduces the clock display to 32sp; versionName 0.7 and versionCode 3.
+- Files not changed by BWC-CHG-007 are carried forward byte-for-byte from v0.6; they were not rebuilt or device-tested.
 - Documentation files originate from v0.1 and were updated for v0.2.
 - Android project files were newly added in BWC-CHG-002.
 - All 17 tracked project and record files were fetched from the feature branch successfully after commit.

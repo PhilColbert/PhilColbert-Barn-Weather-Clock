@@ -5,7 +5,7 @@
 - Current weather retains the live current temperature and now also shows Day maximum and Night minimum; forecast shows Day maximum and Night minimum.
 - BWC-CHG-009: Current-weather date is displayed as day/month only (`d MMM`), without weekday. The main clock date is unchanged.
 - Incremented versionName from 0.7 to 0.8 and versionCode from 3 to 4 for Android update recognition.
-- GitHub source/record verification completed. GitHub Actions build workflow added; run 44540743045 started, with Android SDK setup in progress at last check. APK artifact and physical-device visual testing remain pending.
+- GitHub Actions run 44540883299 succeeded: Java 17 setup, Android SDK setup, SDK package install, Gradle 8.9, `assembleDebug` and artifact upload passed. Debug APK downloaded from artifact 14537997709 and verified present in the ZIP. APK SHA-256: `f521a0701d29553a291b40117e4c4b5fa7b820476abe3ec3f7b8c8f8d7112208`. Physical-device installation and visual testing remain pending.
 
 ## v0.6 — 2026-11-19
 - BWC-CHG-006: Replaced LocationManager-only polling with Google Play Services FusedLocationProviderClient.

@@ -2,31 +2,24 @@
 
 Native Android home-screen widget built with Kotlin and Android AppWidget APIs.
 
-## Included in v1.0
-- Large 42sp Android TextClock, in the left column of a three-column layout and locale-aware date.
-- Live current outdoor conditions and next-calendar-day forecast from Open-Meteo.
-- Approved dark rounded panel with blue-purple border and dividers; current weather and next-day forecast occupy wider, balanced columns. Weather dates sit at the top, icons sit beside the details, and high/low temperatures appear on one line separated by `/`. The live current temperature remains beside a small Now label. Wind rows show direction and speed in mph, with a second row for current and forecast gusts.
-- Manual latitude/longitude configuration, plus an optional one-shot current-device location button in settings.
-- Runtime foreground location permission is requested only when the location button is tapped; coordinates are filled into the fields and applied when Save settings is pressed. Uses Google Fused Location Provider, combining available location sources. It checks for a recent cached fix, then requests a current fix with a bounded update fallback. A status line explains progress or failure. The settings screen displays the installed app version at the bottom.
-- Background colour presets and adjustable transparency.
-- Periodic weather refresh through WorkManager (30-minute interval).
-- Resizable widget and dedicated configuration Activity.
+## v1.1
+- Three-column widget matching the approved reference: clock/date on the left, current weather in the centre and next-day forecast on the right.
+- Dark slate rounded panel, restrained outline and vertical dividers.
+- Weather icons sit to the left of the text. Current temperature has a small Now label. Day and Night temperatures are on separate lines. Wind speed and direction are below, with the date at the bottom of each weather column.
+- Tapping the widget opens its settings.
+- Settings include manual coordinates, optional one-shot device location, background colour and transparency, Open-Meteo attribution, app version and a Remove widget help action.
+- To remove the widget, return to the home screen, press and hold the widget, then choose Remove (or drag it to Remove). Android's launcher performs the deletion.
+- Live Open-Meteo weather, 30-minute WorkManager refresh, Celsius and mph.
 
 ## Build
-1. Open this repository in Android Studio.
-2. Allow Gradle sync and install Android SDK Platform 35 if prompted. The project uses Android Gradle Plugin 8.7.3 (Gradle 8.9); if Android Studio asks for a Gradle installation, select Gradle 8.9.
+1. Open the repository in Android Studio.
+2. Allow Gradle sync and install Android SDK Platform 35 if prompted. The project uses Java/Kotlin JVM 17 and Gradle 8.9.
 3. Select Build > Build Bundle(s) / APK(s) > Build APK(s).
-4. Add **Barn Weather Clock** from the launcher's widget picker.
-5. Enter latitude and longitude during widget configuration, or tap **Use current device location** and grant location permission when Android asks.
+4. Add Barn Weather Clock from the launcher's widget picker.
+5. Enter latitude/longitude or use the current-device-location button.
 
-Example coordinates near Bolton: latitude 53.58, longitude -2.43. Replace these with your chosen location.
+## Weather source and privacy
+Weather is retrieved live from Open-Meteo. Internet access is required. Foreground location permission is requested only when the user taps the location button. The app does not continuously track location or hard-code a private address.
 
-## Weather source
-Weather is retrieved live from the Open-Meteo forecast API. Internet access is required. The app requests foreground location permission only when you explicitly tap **Use current device location**. It does not continuously track your position or hard-code a private address.
-
-## Limitations
-- Reverse geocoding into a place name is not implemented. If location permission is denied or no fix is available, enter coordinates manually.
-- Android may defer background refresh to preserve battery.
-- The clock uses Android TextClock and updates independently of weather refresh.
-- Launcher support for opening configuration from a widget long-press menu varies. The configure Activity is registered in AppWidget metadata.
-- The settings screen displays the installed version at the bottom. A GitHub Actions workflow builds the debug APK on pushes to `feature/android-starter` and publishes it as a 14-day workflow artifact. v0.8 built successfully in run [44540883299](https://github.com/PhilColbert/PhilColbert-Barn-Weather-Clock/actions/runs/44540883299). Current source version: v1.0; its CI build is pending. Physical-device installation and visual testing are still required.
+## Verification
+The v1.1 CI build and physical-device screenshot comparison are pending. Source-level inspection is not a substitute for compilation or device testing.

@@ -1,5 +1,12 @@
 # Version History
 
+## v0.8 — 2026-11-19
+- BWC-CHG-008: Added Open-Meteo daily maximum/minimum temperatures for the current day and next-day forecast.
+- Current weather retains the live current temperature and now also shows Day maximum and Night minimum; forecast shows Day maximum and Night minimum.
+- BWC-CHG-009: Current-weather date is displayed as day/month only (`d MMM`), without weekday. The main clock date is unchanged.
+- Incremented versionName from 0.7 to 0.8 and versionCode from 3 to 4 for Android update recognition.
+- GitHub source/record verification only; Android compilation, APK creation and physical-device visual testing remain pending.
+
 ## v0.6 — 2026-11-19
 - BWC-CHG-006: Replaced LocationManager-only polling with Google Play Services FusedLocationProviderClient.
 - Requests a high-accuracy current fix, accepting a recent cached fix up to 120 seconds old; if unavailable, falls back to a single fused location update for up to 30 seconds.

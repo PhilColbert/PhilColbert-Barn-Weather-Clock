@@ -6,7 +6,7 @@
 - Added in-screen location progress and failure messages.
 - Added a settings footer showing the installed version dynamically from BuildConfig.VERSION_NAME.
 - Added play-services-location 21.3.0 and explicitly enabled BuildConfig generation.
-- Incremented app versionName to 0.6; versionCode remains 1 because no release has been issued.
+- Incremented app versionName to 0.6; versionCode incremented from 1 to 2 so Android recognises this as an update over v0.5.
 - GitHub source and record fetch verification only; Android compilation and physical-device test remain pending.
 
 ## v0.5 — 2026-11-19

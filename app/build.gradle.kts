@@ -10,16 +10,14 @@ android {
         applicationId = "uk.co.barnweatherclock"
         minSdk = 26
         targetSdk = 35
-        versionCode = 5
-        versionName = "0.9"
+        versionCode = 6
+        versionName = "1.0"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+    kotlinOptions { jvmTarget = "17" }
 }
 dependencies {
     implementation("androidx.work:work-runtime-ktx:2.10.0")

@@ -40,17 +40,21 @@ class BarnWeatherWidgetProvider : AppWidgetProvider() {
                     prefs.getInt("background_$id", 0xCC202833.toInt()))
                 if (snapshot != null) {
                     views.setTextViewText(R.id.current_icon, WeatherData.icon(snapshot.current.code))
-                    views.setTextViewText(R.id.current_temp, snapshot.current.temperature.toString() + "°")
+                    views.setTextViewText(R.id.current_temp, "Now " + snapshot.current.temperature + "°")
+                    views.setTextViewText(R.id.current_daynight,
+                        WeatherData.dayNightLabel(snapshot.current.dayTemperature, snapshot.current.nightTemperature))
                     views.setTextViewText(R.id.current_wind,
                         snapshot.current.windMph.toString() + " mph " + snapshot.current.windDirection)
                     views.setTextViewText(R.id.forecast_icon, WeatherData.icon(snapshot.nextDay.code))
-                    views.setTextViewText(R.id.forecast_temp, snapshot.nextDay.temperature.toString() + "°")
+                    views.setTextViewText(R.id.forecast_temp,
+                        WeatherData.dayNightLabel(snapshot.nextDay.dayTemperature, snapshot.nextDay.nightTemperature))
                     views.setTextViewText(R.id.forecast_wind,
                         snapshot.nextDay.windMph.toString() + " mph " + snapshot.nextDay.windDirection)
                     views.setTextViewText(R.id.forecast_date, WeatherData.displayDate(snapshot.nextDay.date))
                 } else {
                     val configured = prefs.getString("latitude", null) != null
                     views.setTextViewText(R.id.current_temp, if (!configured) "Set location" else if (error) "Offline" else "Loading")
+                    views.setTextViewText(R.id.current_daynight, "--")
                     views.setTextViewText(R.id.current_wind, if (!configured) "Configure widget" else "Weather unavailable")
                     views.setTextViewText(R.id.forecast_temp, "--°")
                     views.setTextViewText(R.id.forecast_wind, "-- mph --")

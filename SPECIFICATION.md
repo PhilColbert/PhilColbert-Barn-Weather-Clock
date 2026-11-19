@@ -1,7 +1,7 @@
 # Barn Weather Clock — Project Specification
 
 **Project ID:** BWC-001  
-**Baseline:** v0.2  
+**Baseline:** v0.4  
 **Status:** v0.2 implementation baseline  
 **Date:** 2026-11-19
 
@@ -23,6 +23,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - Compact horizontal widget: time/date on the left, current and next-day weather columns to the right.
 - Weather values displayed must come from a live provider; mock-ups must be labelled illustrative.
 - Weather location must be configurable; no private precise address is hard-coded.
+- Configuration offers an optional one-shot current-device-location action to populate latitude/longitude; manual coordinate entry remains available.
 - Temperature display unit: Celsius.
 - Wind speed display unit: mph.
 
@@ -42,7 +43,9 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - No “Tomorrow” label, no +1 day label, no settings icon.
 
 ## Unresolved items
-- **FIXED for v0.2:** Manually entered latitude/longitude; no device location permission. GPS and geocoding remain future options.
+- **FIXED for v0.2:** Manual latitude/longitude entry remains available.
+- **FIXED for v0.4:** Optional one-shot current-device location retrieval in the configuration screen. The app requests foreground coarse/fine location permission only when the user taps the location button; it does not continuously track location. The retrieved coordinates populate the fields and are applied only after Save settings.
+- **UNRESOLVED:** Reverse geocoding of coordinates into a human-readable place name is not implemented.
 - **UNRESOLVED:** Primary Android device model and Android API level for device testing.
 - **PROPOSED:** Default slate background with 20% transparency.
 - **UNRESOLVED:** Minimum widget dimensions and launcher resize behaviour.
@@ -52,9 +55,10 @@ A native Android home-screen widget showing current time/date, current outdoor w
 1. Widget can be added from the Android widget picker.
 2. Time updates and date remains locale-aware.
 3. Current weather and the next calendar day's forecast display temperature, condition icon, wind speed and direction, with dates.
-4. Weather location can be configured.
+4. Weather location can be configured manually or populated from a one-shot device location request after user permission.
 5. Background colour and transparency can be changed through widget configuration and persist after reboot.
 6. Widget remains legible at supported sizes and transparency levels.
 7. Network/location failures show a clear stale/unavailable state without crashing.
-8. No unrelated launcher behaviour is changed.
-9. APK builds successfully and installation/device tests are reported separately.
+8. Denied location permission leaves manual coordinate entry usable.
+9. No unrelated launcher behaviour is changed.
+10. APK builds successfully and installation/device tests are reported separately.

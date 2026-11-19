@@ -2,7 +2,7 @@
 
 **Project ID:** BWC-001  
 **Baseline:** v0.6  
-**Status:** v0.2 implementation baseline  
+**Status:** v0.6 implementation baseline  
 **Date:** 2026-11-19
 
 ## Purpose
@@ -62,4 +62,4 @@ A native Android home-screen widget showing current time/date, current outdoor w
 7. Network/location failures show a clear stale/unavailable state without crashing.
 8. Denied location permission leaves manual coordinate entry usable.
 9. No unrelated launcher behaviour is changed.
-10. APK builds successfully and installation/device tests are reported separately.
+10. The widget configuration screen displays the installed app version.\n11. APK builds successfully and installation/device tests are reported separately.

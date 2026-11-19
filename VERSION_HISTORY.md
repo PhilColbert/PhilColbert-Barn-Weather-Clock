@@ -1,5 +1,14 @@
 # Version History
 
+## v0.6 — 2026-11-19
+- BWC-CHG-006: Replaced LocationManager-only polling with Google Play Services FusedLocationProviderClient.
+- Requests a high-accuracy current fix, accepting a recent cached fix up to 120 seconds old; if unavailable, falls back to a single fused location update for up to 30 seconds.
+- Added in-screen location progress and failure messages.
+- Added a settings footer showing the installed version dynamically from BuildConfig.VERSION_NAME.
+- Added play-services-location 21.3.0 and explicitly enabled BuildConfig generation.
+- Incremented app versionName to 0.6; versionCode remains 1 because no release has been issued.
+- GitHub source and record fetch verification only; Android compilation and physical-device test remain pending.
+
 ## v0.5 — 2026-11-19
 - BWC-CHG-005: Corrected provider selection so GPS is used when enabled even when Android grants approximate/coarse location permission. Android controls the precision returned.
 - Replaced the API 30+ one-shot callback path with a single location-update listener, matching the legacy path and avoiding reliance on a null-prone one-shot result.

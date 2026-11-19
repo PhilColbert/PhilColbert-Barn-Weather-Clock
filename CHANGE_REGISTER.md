@@ -1,7 +1,7 @@
 # Change Register
 
 Project: Barn Weather Clock (BWC-001)  
-Baseline: v0.4
+Baseline: v0.5
 
 | Change ID | Status | Request / scope | Baseline | Files | Result |
 |---|---|---|---|---|---|
@@ -10,7 +10,7 @@ Baseline: v0.4
 
 | BWC-CHG-003 | IMPLEMENTED / USER BUILD VERIFIED | Fix reported Kotlin/Java JVM-target mismatch by explicitly aligning Android Java and Kotlin compilation to JVM 17; bump app version to 0.3 | v0.2 / user build log | app/build.gradle.kts, project records | User reports the project now works; build/runtime details not independently inspected |
 | BWC-CHG-004 | IMPLEMENTED / USER DEVICE ISSUE REPORTED | Add a configuration-screen action to obtain the device's current location and populate latitude/longitude, with runtime permission handling and a manual-entry fallback; bump app version to 0.4 | v0.3 (user-confirmed working) | AndroidManifest.xml, WidgetConfigActivity.kt, app/build.gradle.kts, project records | Source committed and fetched for verification; no local Android build or device test performed |
-| BWC-CHG-005 | APPROVED / IN PROGRESS | Correct current-location retrieval: allow GPS provider with approximate permission and add a location-update fallback if the one-shot request returns no fix; improve diagnostics and bump app version to 0.5 | v0.4 / user report: device shows GPS lock but coordinate fields remain blank | WidgetConfigActivity.kt, app/build.gradle.kts, project records | Root-cause candidates identified from source; change logged before edit; build/device retest pending |
+| BWC-CHG-005 | IMPLEMENTED / BUILD & DEVICE RETEST PENDING | Correct current-location retrieval: allow GPS provider with approximate permission, use a recent cached fix or a single location update, add a timeout and improve diagnostics; bump app version to 0.5 | v0.4 / user report: device shows GPS lock but coordinate fields remain blank | WidgetConfigActivity.kt, app/build.gradle.kts, project records | Updated source committed and fetched for verification; no local Android build or device test performed |
 
 ## Scope controls
 - Changes require a Change ID, request, baseline and scope before edits.
@@ -35,7 +35,7 @@ Baseline: v0.4
 - Preserved all other project source files byte-for-byte.
 - The uploaded build log is the baseline failure evidence; no local Android build environment is available here to rerun the Windows build.
 
-## BWC-CHG-004 implementation notes
+## BWC-CHG-005 implementation notes\n- The v0.4 implementation excluded GPS_PROVIDER whenever fine permission was not granted, even though Android can serve approximate/coarse results from the GPS provider. This could leave no eligible provider on devices without an enabled network provider.\n- The v0.4 API 30+ path relied only on getCurrentLocation callback; a null callback result ended the attempt without requesting an update.\n- v0.5 selects GPS whenever enabled, irrespective of fine-vs-coarse grant, and falls back to network provider when GPS is unavailable.\n- A recent cached fix (up to two minutes) is applied immediately; otherwise a single location update is requested and the listener is removed after success, timeout, provider disable or Activity destruction.\n- Added visible provider/accuracy/error feedback. No background permission or ongoing tracking.\n- Source committed and fetched successfully; compile and physical-device test remain pending.\n\n## BWC-CHG-004 implementation notes
 - Added ACCESS_COARSE_LOCATION and ACCESS_FINE_LOCATION manifest permissions. No background location permission or continuous tracking.
 - Added a one-shot current-device location button in widget configuration; permission is requested only after the button is tapped.
 - Supports precise GPS when available and network location when only coarse permission/provider is available.

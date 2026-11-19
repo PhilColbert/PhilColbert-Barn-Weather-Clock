@@ -1,7 +1,7 @@
 # Change Register
 
 Project: Barn Weather Clock (BWC-001)  
-Baseline: v0.8
+Baseline: v0.9
 
 | Change ID | Status | Request / scope | Baseline | Files | Result |
 |---|---|---|---|---|---|
@@ -85,3 +85,12 @@ Baseline: v0.8
 | BWC-CHG-010 | IMPLEMENTED / CI BUILD VERIFIED | Add a reproducible GitHub Actions Android build to compile v0.8 and publish the debug APK as a downloadable workflow artifact | v0.8 source / no Gradle wrapper or local Android SDK available | .github/workflows/android-build.yml, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Run 44540883299 completed successfully; debug APK artifact 14537997709 uploaded and downloaded for verification |
 
 | BWC-CHG-011 | IMPLEMENTED / CI VERIFIED | Correct GitHub Actions Android SDK setup after runner failure caused by removed SDK package `tools` | v0.8 / BWC-CHG-010 first CI run | .github/workflows/android-build.yml, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md | Replaced obsolete default SDK package list with `platform-tools`; run 44540883299 completed successfully through APK upload |
+
+
+## BWC-CHG-012 — approved and implemented scope
+- **Request:** Remove the words “Day” and “Night” from both current-weather and next-day forecast temperature pairs; retain the two values on separate lines.
+- **Baseline:** v0.8 at commit 86975d05eba185e6735df02a09e4a3bf2b77abd7.
+- **Scope:** WeatherData temperature-pair formatter, widget XML placeholder text, app version metadata, and project records. No weather API fields, temperature calculations, wind, icons, dates, location, refresh, or preferences changed.
+- **Version:** v0.9 / versionCode 5.
+- **Files changed:** WeatherData.kt, widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md.
+- **Validation:** Source-level replacement checks and GitHub fetch verification to follow; Android CI build, APK inspection, and device rendering are pending until the workflow completes. All other project files are carried forward unchanged from v0.8 and are not claimed rebuilt or device-tested.

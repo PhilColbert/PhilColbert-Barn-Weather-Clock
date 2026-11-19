@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.os.Handler
 import android.view.ViewGroup
 import android.widget.*
 import com.google.android.gms.location.CurrentLocationRequest
@@ -31,6 +32,11 @@ class WidgetConfigActivity : Activity() {
     private val fusedLocationClient by lazy { LocationServices.getFusedLocationProviderClient(this) }
     private var cancellationTokenSource: CancellationTokenSource? = null
     private var locationCallback: LocationCallback? = null
+    private val locationHandler = Handler(Looper.getMainLooper())
+    private val locationTimeout = Runnable {
+        stopLocationRequest()
+        locationStatus.text = "Location: no fix received within 30 seconds. Try outdoors, check Google Play services and Location settings, or enter coordinates manually."
+    }
     private val colours = intArrayOf(Color.rgb(32, 40, 51), Color.rgb(20, 55, 85),
         Color.rgb(45, 45, 45), Color.BLACK)
 
@@ -168,6 +174,10 @@ class WidgetConfigActivity : Activity() {
             }
             locationCallback = callback
             fusedLocationClient.requestLocationUpdates(request, callback, Looper.getMainLooper())
+                .addOnSuccessListener {
+                    locationHandler.removeCallbacks(locationTimeout)
+                    locationHandler.postDelayed(locationTimeout, 30000L)
+                }
                 .addOnFailureListener { failure ->
                     stopLocationRequest()
                     locationStatus.text = "Location failed: ${failure.localizedMessage ?: failure.javaClass.simpleName}"
@@ -191,6 +201,7 @@ class WidgetConfigActivity : Activity() {
     }
 
     private fun stopLocationRequest() {
+        locationHandler.removeCallbacks(locationTimeout)
         cancellationTokenSource?.cancel()
         cancellationTokenSource = null
         locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }

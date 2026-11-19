@@ -13,7 +13,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 - Kotlin implementation using Android AppWidget APIs.
 - Current time is prominent; current design target is **42sp**.
 - Current date appears beneath the time.
-- Current conditions: weather icon, live current temperature, today's maximum and minimum temperatures, displayed as two unlabeled values, wind speed in mph, compass direction, and date shown as day/month only (no weekday).
+- Current conditions: weather icon, live current temperature, today's maximum and minimum temperatures, displayed as two unlabeled values, wind speed and gusts in mph, compass direction, and date shown as day/month only (no weekday).
 - Next-day forecast uses the same icon-left / details-right arrangement as current weather and shows the next day's maximum and minimum temperatures, displayed as two unlabeled values.
 - Forecast column shows its actual calendar date. Do not show the words “Tomorrow” or an extra +1 day label.
 - No settings cog or settings icon inside the widget.
@@ -38,8 +38,8 @@ A native Android home-screen widget showing current time/date, current outdoor w
 ## Approved layout baseline
 - Single-line horizontal widget.
 - Left: prominent 32sp current time, current date below.
-- Middle: current date at the top; current weather icon on the left; a small “Now” label beside the larger live temperature; today's maximum and minimum on one line separated by `/`; wind direction and speed along the bottom.
-- Right: next-day date at the top; forecast icon on the left; maximum and minimum on one line separated by `/`; wind direction and speed along the bottom.
+- Middle: current date at the top; current weather icon on the left; a small “Now” label beside the larger live temperature; today's maximum and minimum on one line separated by `/`; wind direction and speed plus a separate gust row along the bottom.
+- Right: next-day date at the top; forecast icon on the left; maximum and minimum on one line separated by `/`; wind direction and speed plus a separate gust row along the bottom.
 - No “Tomorrow” label, no +1 day label, no settings icon.
 
 ## Unresolved items

@@ -10,3 +10,9 @@
 - Incremented versionName to 1.1 and versionCode to 7.
 - Source committed to feature/android-starter. CI compilation, APK inspection and physical-device screenshot comparison pending.
 
+
+## BWC-CHG-015 — correction following user report (2026-11-19)
+- Reverted the unapproved widget descriptor sizing to the exact v1.0 values: minWidth 360dp, minHeight 100dp, minResizeWidth 320dp, minResizeHeight 88dp. No intentional 5×2 size change is retained.
+- Rebased the provider on the v1.0 provider implementation and retained only the required layout-ID mapping, tap-to-settings PendingIntent and launcher deletion cleanup. Existing weather refresh/scheduling logic is preserved.
+- Replaced generic View separator elements with TextView elements, which are supported by Android RemoteViews, to address a likely cause of the launcher “Can't load widget” inflation failure.
+- Source-level ID check passed. New CI build and device test pending; no device-load success claimed.

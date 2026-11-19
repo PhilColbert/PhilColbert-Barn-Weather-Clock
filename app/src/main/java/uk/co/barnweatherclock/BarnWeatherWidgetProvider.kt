@@ -46,11 +46,13 @@ class BarnWeatherWidgetProvider : AppWidgetProvider() {
                         WeatherData.temperaturePairLabel(snapshot.current.dayTemperature, snapshot.current.nightTemperature))
                     views.setTextViewText(R.id.current_wind,
                         "≋ " + snapshot.current.windDirection + " " + snapshot.current.windMph + " mph")
+                    views.setTextViewText(R.id.current_gust, "⚑ " + snapshot.current.gustMph + " mph")
                     views.setTextViewText(R.id.forecast_icon, WeatherData.icon(snapshot.nextDay.code))
                     views.setTextViewText(R.id.forecast_temp,
                         WeatherData.temperaturePairLabel(snapshot.nextDay.dayTemperature, snapshot.nextDay.nightTemperature))
                     views.setTextViewText(R.id.forecast_wind,
                         "≋ " + snapshot.nextDay.windDirection + " " + snapshot.nextDay.windMph + " mph")
+                    views.setTextViewText(R.id.forecast_gust, "⚑ " + snapshot.nextDay.gustMph + " mph")
                     views.setTextViewText(R.id.forecast_date, WeatherData.displayDate(snapshot.nextDay.date))
                 } else {
                     views.setViewVisibility(R.id.current_now, android.view.View.GONE)
@@ -58,8 +60,10 @@ class BarnWeatherWidgetProvider : AppWidgetProvider() {
                     views.setTextViewText(R.id.current_temp, if (!configured) "Set location" else if (error) "Offline" else "Loading")
                     views.setTextViewText(R.id.current_daynight, "--")
                     views.setTextViewText(R.id.current_wind, if (!configured) "Configure widget" else "Weather unavailable")
+                    views.setTextViewText(R.id.current_gust, "-- mph")
                     views.setTextViewText(R.id.forecast_temp, "--° / --°")
                     views.setTextViewText(R.id.forecast_wind, "-- mph --")
+                    views.setTextViewText(R.id.forecast_gust, "-- mph")
                 }
                 manager.updateAppWidget(id, views)
             }

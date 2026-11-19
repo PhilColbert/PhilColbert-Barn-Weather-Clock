@@ -5,7 +5,7 @@
 **Repository:** https://github.com/PhilColbert/PhilColbert-Barn-Weather-Clock
 **Working branch:** feature/android-starter
 **Default branch:** main
-**Version:** v0.2
+**Version:** v0.3
 **Status:** Initial Android implementation committed; build verification pending
 
 ## Tracked files
@@ -19,7 +19,7 @@
 | `settings.gradle.kts` | v0.2 | New Android project file |
 | `build.gradle.kts` | v0.2 | New Android project file |
 | `gradle.properties` | v0.2 | New Android project file |
-| `app/build.gradle.kts` | v0.2 | New Android project file |
+| `app/build.gradle.kts` | v0.2/v0.3 | Updated JVM targets to 17 and app versionName 0.3 in BWC-CHG-003 |
 | `app/src/main/AndroidManifest.xml` | v0.2 | New Android project file |
 | `app/src/main/res/xml/barn_weather_widget_info.xml` | v0.2 | New Android project file |
 | `app/src/main/res/values/strings.xml` | v0.2 | New Android project file |
@@ -35,6 +35,7 @@
 - Android project files were newly added in BWC-CHG-002.
 - All 17 tracked project and record files were fetched from the feature branch successfully after commit.
 - No files are claimed as rebuilt or device-tested.
-- No APK has been produced.
+- JVM target correction committed; build retest is pending.
+- No APK has been produced by this workflow.
 - Visual baseline screenshots and matching after-change screenshots are not yet available; no emulator/device has been supplied or tested.
 - Build, runtime and launcher compatibility remain unverified.

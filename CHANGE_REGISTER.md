@@ -52,3 +52,5 @@ Baseline: v0.6
 - Displays the installed version dynamically as "Barn Weather Clock v" plus BuildConfig.VERSION_NAME at the bottom of settings.
 - Incremented versionName to 0.6; versionCode remains 1 because no release has been issued.
 - Source and records fetched from GitHub for verification; compilation and physical-device location testing are not yet performed.
+
+| BWC-CHG-007 | APPROVED / IN PROGRESS | Reduce the widget's oversized clock from 48sp to 32sp; align the specification and correct the v0.6 versionCode record | v0.6 | app/src/main/res/layout/widget_barn_weather.xml, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md | Change logged before implementation; source/build/device checks pending |

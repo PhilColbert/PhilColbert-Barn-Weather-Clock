@@ -7,7 +7,7 @@
         android:orientation="horizontal" android:gravity="center_vertical"
         android:background="#E6101828" android:paddingStart="9dp" android:paddingEnd="9dp"
         android:paddingTop="6dp" android:paddingBottom="6dp">
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.92"
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1.15"
             android:gravity="center_vertical" android:orientation="vertical" android:paddingEnd="5dp">
             <TextClock android:id="@+id/time_text" android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:format12Hour="h:mm" android:format24Hour="HH:mm" android:textColor="#FFFFFFFF"
@@ -18,7 +18,7 @@
         </LinearLayout>
         <View android:layout_width="1dp" android:layout_height="match_parent" android:layout_marginVertical="7dp"
             android:background="#777F8DCE" />
-        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1.24"
+        <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1.10"
             android:orientation="vertical" android:gravity="center" android:paddingStart="7dp" android:paddingEnd="7dp">
             <TextClock android:id="@+id/current_date" android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:format12Hour="d MMM" android:format24Hour="d MMM" android:textColor="#FFE7ECF7"

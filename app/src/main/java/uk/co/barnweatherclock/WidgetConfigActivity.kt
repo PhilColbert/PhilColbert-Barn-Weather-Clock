@@ -8,13 +8,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
-import android.os.Handler
 import android.os.Looper
 import android.view.ViewGroup
 import android.widget.*
+import com.google.android.gms.location.CurrentLocationRequest
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 
 class WidgetConfigActivity : Activity() {
     private var widgetId = AppWidgetManager.INVALID_APPWIDGET_ID
@@ -23,15 +27,10 @@ class WidgetConfigActivity : Activity() {
     private lateinit var longitude: EditText
     private lateinit var background: Spinner
     private lateinit var transparency: SeekBar
-    private var pendingListener: LocationListener? = null
-    private var activeLocationManager: LocationManager? = null
-    private val locationHandler = Handler(Looper.getMainLooper())
-    private val locationTimeout = Runnable {
-        pendingListener?.let { listener -> activeLocationManager?.removeUpdates(listener) }
-        pendingListener = null
-        activeLocationManager = null
-        Toast.makeText(this, "No location fix received within 30 seconds. Check Location is enabled, then try again or enter coordinates manually.", Toast.LENGTH_LONG).show()
-    }
+    private lateinit var locationStatus: TextView
+    private val fusedLocationClient by lazy { LocationServices.getFusedLocationProviderClient(this) }
+    private var cancellationTokenSource: CancellationTokenSource? = null
+    private var locationCallback: LocationCallback? = null
     private val colours = intArrayOf(Color.rgb(32, 40, 51), Color.rgb(20, 55, 85),
         Color.rgb(45, 45, 45), Color.BLACK)
 
@@ -70,6 +69,12 @@ class WidgetConfigActivity : Activity() {
             text = "Use current device location"
             setOnClickListener { obtainCurrentLocation() }
         })
+        locationStatus = TextView(this).apply {
+            text = "Location: manual entry available"
+            textSize = 12f
+            setPadding(0, 6, 0, 4)
+        }
+        root.addView(locationStatus)
         label("Background colour")
         background = Spinner(this)
         background.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,
@@ -91,6 +96,12 @@ class WidgetConfigActivity : Activity() {
             textSize = 12f
             setPadding(0, 12, 0, 0)
         })
+        root.addView(TextView(this).apply {
+            text = "Barn Weather Clock v${BuildConfig.VERSION_NAME}"
+            textSize = 12f
+            setTextColor(Color.DKGRAY)
+            setPadding(0, 8, 0, 0)
+        })
         setContentView(ScrollView(this).apply { addView(root) })
     }
 
@@ -105,87 +116,97 @@ class WidgetConfigActivity : Activity() {
             return
         }
 
-        val manager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val provider = try {
-            // Approximate-location permission can still use the GPS provider; Android
-            // simply limits the precision of the returned coordinates.
-            when {
-                manager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> LocationManager.GPS_PROVIDER
-                manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> LocationManager.NETWORK_PROVIDER
-                else -> null
-            }
-        } catch (_: Exception) { null }
-
-        if (provider == null) {
-            Toast.makeText(this, "No location provider is enabled. Turn on Location services and try again.", Toast.LENGTH_LONG).show()
-            return
-        }
-
+        stopLocationRequest()
+        locationStatus.text = "Location: asking Android for a recent position…"
+        cancellationTokenSource = CancellationTokenSource()
         try {
-            // Use a recent cached fix immediately when available.
-            val cached = manager.getLastKnownLocation(provider)
-            if (cached != null && System.currentTimeMillis() - cached.time in 0..120000L) {
-                populateCoordinates(cached)
-                return
-            }
-
-            Toast.makeText(this, "Waiting for a location fix from $provider…", Toast.LENGTH_SHORT).show()
-            val listener = object : LocationListener {
-                override fun onLocationChanged(result: Location) {
-                    locationHandler.removeCallbacks(locationTimeout)
-                    pendingListener = null
-                    activeLocationManager?.removeUpdates(this)
-                    activeLocationManager = null
-                    populateCoordinates(result)
+            val request = CurrentLocationRequest.Builder()
+                .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+                .setDurationMillis(20000L)
+                .setMaxUpdateAgeMillis(120000L)
+                .build()
+            fusedLocationClient.getCurrentLocation(request, cancellationTokenSource!!.token)
+                .addOnSuccessListener { result ->
+                    if (result != null) populateCoordinates(result)
+                    else requestLocationUpdateFallback()
                 }
-                @Deprecated("Deprecated by Android")
-                override fun onStatusChanged(providerName: String?, status: Int, extras: Bundle?) = Unit
-                override fun onProviderEnabled(providerName: String) = Unit
-                override fun onProviderDisabled(providerName: String) {
-                    if (providerName == provider) {
-                        locationHandler.removeCallbacks(locationTimeout)
-                        pendingListener = null
-                        activeLocationManager?.removeUpdates(this)
-                        activeLocationManager = null
-                        Toast.makeText(this@WidgetConfigActivity, "Location provider was disabled. Try again.", Toast.LENGTH_LONG).show()
+                .addOnFailureListener { error ->
+                    locationStatus.text = "Location: current request failed; trying live updates…"
+                    requestLocationUpdateFallback(error.message)
+                }
+        } catch (_: SecurityException) {
+            stopLocationRequest()
+            locationStatus.text = "Location: permission required. Allow approximate or precise access."
+        } catch (failure: Exception) {
+            stopLocationRequest()
+            locationStatus.text = "Location: could not start (${failure.javaClass.simpleName})."
+        }
+    }
+
+    private fun requestLocationUpdateFallback(previousError: String? = null) {
+        if (isFinishing || isDestroyed) return
+        try {
+            locationStatus.text = if (previousError.isNullOrBlank()) {
+                "Location: no cached fix; waiting up to 30 seconds for GPS/Wi-Fi…"
+            } else {
+                "Location: retrying with live updates…"
+            }
+            val request = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000L)
+                .setWaitForAccurateLocation(false)
+                .setMaxUpdates(1)
+                .setDurationMillis(30000L)
+                .build()
+            val callback = object : LocationCallback() {
+                override fun onLocationResult(result: LocationResult) {
+                    val fix = result.lastLocation
+                    if (fix != null) populateCoordinates(fix)
+                    else {
+                        stopLocationRequest()
+                        locationStatus.text = "Location: Android returned no position. Try outdoors or enter coordinates manually."
                     }
                 }
             }
-            pendingListener = listener
-            activeLocationManager = manager
-            manager.requestLocationUpdates(provider, 1000L, 0f, listener, Looper.getMainLooper())
-            locationHandler.postDelayed(locationTimeout, 30000L)
+            locationCallback = callback
+            fusedLocationClient.requestLocationUpdates(request, callback, Looper.getMainLooper())
+                .addOnFailureListener { failure ->
+                    stopLocationRequest()
+                    locationStatus.text = "Location failed: ${failure.localizedMessage ?: failure.javaClass.simpleName}"
+                }
         } catch (_: SecurityException) {
-            pendingListener = null
-            activeLocationManager = null
-            Toast.makeText(this, "Location permission is required. Allow approximate or precise location and try again.", Toast.LENGTH_LONG).show()
-        } catch (e: Exception) {
-            pendingListener = null
-            activeLocationManager = null
-            Toast.makeText(this, "Could not start location: ${e.javaClass.simpleName}", Toast.LENGTH_LONG).show()
+            stopLocationRequest()
+            locationStatus.text = "Location: permission required. Allow approximate or precise access."
+        } catch (failure: Exception) {
+            stopLocationRequest()
+            locationStatus.text = "Location failed: ${failure.localizedMessage ?: failure.javaClass.simpleName}"
         }
+    }
+
+    private fun populateCoordinates(result: Location) {
+        stopLocationRequest()
+        latitude.setText(String.format(java.util.Locale.US, "%.6f", result.latitude))
+        longitude.setText(String.format(java.util.Locale.US, "%.6f", result.longitude))
+        location.setText("Current device location")
+        locationStatus.text = "Location added (accuracy about ${result.accuracy.toInt()} m). Press Save settings to apply."
+        Toast.makeText(this, "Current coordinates added.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun stopLocationRequest() {
+        cancellationTokenSource?.cancel()
+        cancellationTokenSource = null
+        locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }
+        locationCallback = null
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == LOCATION_PERMISSION_REQUEST) {
             if (grantResults.any { it == PackageManager.PERMISSION_GRANTED }) obtainCurrentLocation()
-            else Toast.makeText(this, "Location permission was not granted. You can still enter coordinates manually.", Toast.LENGTH_LONG).show()
+            else locationStatus.text = "Location permission denied. You can still enter coordinates manually."
         }
     }
 
-    private fun populateCoordinates(result: Location) {
-        latitude.setText(String.format(java.util.Locale.US, "%.6f", result.latitude))
-        longitude.setText(String.format(java.util.Locale.US, "%.6f", result.longitude))
-        location.setText("Current device location")
-        Toast.makeText(this, "Location added (±${result.accuracy.toInt()} m). Press Save settings to apply it.", Toast.LENGTH_LONG).show()
-    }
-
     override fun onDestroy() {
-        locationHandler.removeCallbacks(locationTimeout)
-        pendingListener?.let { activeLocationManager?.removeUpdates(it) }
-        pendingListener = null
-        activeLocationManager = null
+        stopLocationRequest()
         super.onDestroy()
     }
 

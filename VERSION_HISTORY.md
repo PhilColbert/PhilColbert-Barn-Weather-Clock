@@ -1,5 +1,11 @@
 # Version History
 
+## v0.3 — 2026-11-19
+- BWC-CHG-003: Fixed the reported Java/Kotlin JVM target mismatch by explicitly setting both compilation targets to JVM 17.
+- Incremented app versionName from 0.2 to 0.3.
+- Preserved all other Android source files unchanged.
+- Build retest pending; no successful build or APK claimed.
+
 ## v0.2 — 2026-11-19
 - BWC-CHG-002: Added initial native Kotlin Android project.
 - Implemented Android AppWidget layout with 48sp TextClock and date.

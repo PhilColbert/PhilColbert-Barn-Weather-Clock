@@ -1,7 +1,7 @@
 # Change Register
 
 Project: Barn Weather Clock (BWC-001)  
-Baseline: v0.2
+Baseline: v0.4
 
 | Change ID | Status | Request / scope | Baseline | Files | Result |
 |---|---|---|---|---|---|
@@ -33,4 +33,4 @@ Baseline: v0.2
 - Incremented app versionName to 0.3; versionCode remains 1 because no release has been issued.
 - Preserved all other project source files byte-for-byte.
 - The uploaded build log is the baseline failure evidence; no local Android build environment is available here to rerun the Windows build.
-\n## BWC-CHG-004 implementation notes\n- Added ACCESS_COARSE_LOCATION and ACCESS_FINE_LOCATION manifest permissions. No background location permission or continuous tracking.\n- Added a one-shot current-device location button in widget configuration; permission is requested only after the button is tapped.\n- Supports precise GPS when available and network location when only coarse permission/provider is available.\n- Populates coordinate fields; user must still press Save settings to persist and refresh the widget. Manual entry remains available.\n- Added a 20-second timeout to the legacy Android 8–10 single-update path.\n- Source files committed to feature branch and will be fetched for integrity verification; compile/runtime testing remains pending.\n
+\n## BWC-CHG-004 implementation notes\n- Added ACCESS_COARSE_LOCATION and ACCESS_FINE_LOCATION manifest permissions. No background location permission or continuous tracking.\n- Added a one-shot current-device location button in widget configuration; permission is requested only after the button is tapped.\n- Supports precise GPS when available and network location when only coarse permission/provider is available.\n- Populates coordinate fields; user must still press Save settings to persist and refresh the widget. Manual entry remains available.\n- Added a 20-second timeout to the legacy Android 8–10 single-update path.\n- Source files committed and fetched successfully from the feature branch; compile/runtime testing remains pending.\n

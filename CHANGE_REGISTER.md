@@ -88,12 +88,12 @@ Baseline: v0.9
 
 
 ## BWC-CHG-012 — approved and implemented scope
-- **Request:** Remove the words “Day” and “Night” from both current-weather and next-day forecast temperature pairs; retain the two values on separate lines. Display a small “NOW” label immediately to the left of the larger live current temperature on the same line.
+- **Request:** Remove the words “Day” and “Night” from both current-weather and next-day forecast temperature pairs; retain the two values on separate lines. Display a small “Now” label immediately to the left of the larger live current temperature on the same line.
 - **Baseline:** v0.8 at commit 86975d05eba185e6735df02a09e4a3bf2b77abd7.
 - **Scope:** WeatherData temperature-pair formatter, widget provider text/visibility, widget XML current-temperature row and placeholders, app version metadata, CI artifact label, and project records. No weather API fields, temperature calculations, wind, icons, dates, location, refresh, or preferences changed.
 - **Version:** v0.9 / versionCode 5.
 - **Files changed:** WeatherData.kt, widget_barn_weather.xml, app/build.gradle.kts, SPECIFICATION.md, CHANGE_REGISTER.md, MANIFEST.md, VERSION_HISTORY.md, README.md.
 - **Validation:** Source-level changes and GitHub fetch verification completed; Android CI build, APK inspection, and device rendering are pending. All other project files are carried forward unchanged from v0.8 and are not claimed rebuilt or device-tested.
 
-- BWC-CHG-012 refinement: the live current temperature is displayed on the same line as a smaller “NOW” label. The label is hidden while weather is unavailable. High/low values remain unlabeled on separate lines.
+- BWC-CHG-012 refinement: the live current temperature is displayed on the same line as a smaller “Now” label. The label is hidden while weather is unavailable. High/low values remain unlabeled on separate lines.
 - CI workflow artifact label updated to `barn-weather-clock-v0.9-debug` to match the package version.

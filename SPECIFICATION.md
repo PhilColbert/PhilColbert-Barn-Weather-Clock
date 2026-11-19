@@ -1,7 +1,7 @@
 # Barn Weather Clock — Project Specification
 
 **Project ID:** BWC-001  
-**Baseline:** v0.4  
+**Baseline:** v0.5  
 **Status:** v0.2 implementation baseline  
 **Date:** 2026-11-19
 
@@ -44,7 +44,7 @@ A native Android home-screen widget showing current time/date, current outdoor w
 
 ## Unresolved items
 - **FIXED for v0.2:** Manual latitude/longitude entry remains available.
-- **FIXED for v0.4:** Optional one-shot current-device location retrieval in the configuration screen. The app requests foreground coarse/fine location permission only when the user taps the location button; it does not continuously track location. The retrieved coordinates populate the fields and are applied only after Save settings.
+- **FIXED for v0.4:** Optional one-shot current-device location retrieval in the configuration screen. The app requests foreground coarse/fine location permission only when the user taps the location button; it does not continuously track location. GPS provider is eligible with either permission level; Android may reduce coordinate precision when only approximate permission is granted. A fresh cached fix is used where available, otherwise the screen listens for a single update and stops after the first fix or timeout. The retrieved coordinates populate the fields and are applied only after Save settings.
 - **UNRESOLVED:** Reverse geocoding of coordinates into a human-readable place name is not implemented.
 - **UNRESOLVED:** Primary Android device model and Android API level for device testing.
 - **PROPOSED:** Default slate background with 20% transparency.

@@ -24,7 +24,7 @@
 | `app/src/main/AndroidManifest.xml` | v0.2/v0.4 | Added foreground coarse/fine location permission declarations in BWC-CHG-004; unchanged in v0.5 |
 | `app/src/main/res/xml/barn_weather_widget_info.xml` | v0.2 | New Android project file |
 | `app/src/main/res/values/strings.xml` | v0.2 | New Android project file |
-| `app/src/main/res/layout/widget_barn_weather.xml` | v0.2/v0.7/v0.8 | Clock 32sp; current-weather date d MMM; small NOW label inline with live temperature; unlabeled two-line high/low pairs in both weather columns |
+| `app/src/main/res/layout/widget_barn_weather.xml` | v0.2/v0.7/v0.8 | Clock 32sp; current-weather date d MMM; small Now label inline with live temperature; unlabeled two-line high/low pairs in both weather columns |
 | `app/src/main/java/uk/co/barnweatherclock/WeatherData.kt` | v0.2 | New Android project file |
 | `app/src/main/java/uk/co/barnweatherclock/BarnWeatherWidgetProvider.kt` | v0.2 | New Android project file |
 | `app/src/main/java/uk/co/barnweatherclock/WeatherRefresh.kt` | v0.2 | New Android project file |
@@ -49,4 +49,4 @@
 - Visual baseline screenshots and matching after-change screenshots are not yet available; no emulator/device has been supplied or tested.
 - Build, runtime and launcher compatibility remain unverified.
 
-- BWC-CHG-012: live temperature now shares a line with a smaller NOW label; the label is hidden in unavailable/error states. Two unlabeled high/low values remain below. The v0.9 source is pending CI build and device testing.
+- BWC-CHG-012: live temperature now shares a line with a smaller Now label; the label is hidden in unavailable/error states. Two unlabeled high/low values remain below. The v0.9 source is pending CI build and device testing.

@@ -29,4 +29,4 @@ Weather is retrieved live from the Open-Meteo forecast API. Internet access is r
 - Android may defer background refresh to preserve battery.
 - The clock uses Android TextClock and updates independently of weather refresh.
 - Launcher support for opening configuration from a widget long-press menu varies. The configure Activity is registered in AppWidget metadata.
-- The settings screen displays the installed version at the bottom. No APK is committed; build locally in Android Studio. Current source version: v0.8.
+- The settings screen displays the installed version at the bottom. A GitHub Actions workflow builds the debug APK on pushes to `feature/android-starter` and publishes it as a 14-day workflow artifact. Current source version: v0.8. Until the workflow completes successfully, no APK is available.

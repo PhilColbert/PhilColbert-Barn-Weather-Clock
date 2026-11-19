@@ -61,23 +61,23 @@ class BarnWeatherWidgetProvider : AppWidgetProvider() {
                         "Day " + snapshot.current.dayTemperature + "°\nNight " + snapshot.current.nightTemperature + "°")
                     views.setTextViewText(R.id.current_wind,
                         snapshot.current.windMph.toString() + " mph " + snapshot.current.windDirection)
-                    views.setTextViewText(R.id.current_gust, WeatherData.displayDate(snapshot.current.date))
+                    views.setTextViewText(R.id.current_weather_date, WeatherData.displayDate(snapshot.current.date))
                     views.setTextViewText(R.id.forecast_icon, WeatherData.icon(snapshot.nextDay.code))
                     views.setTextViewText(R.id.forecast_temp,
                         "Day " + snapshot.nextDay.dayTemperature + "°\nNight " + snapshot.nextDay.nightTemperature + "°")
                     views.setTextViewText(R.id.forecast_wind,
                         snapshot.nextDay.windMph.toString() + " mph " + snapshot.nextDay.windDirection)
-                    views.setTextViewText(R.id.forecast_gust, WeatherData.displayDate(snapshot.nextDay.date))
+                    views.setTextViewText(R.id.forecast_weather_date, WeatherData.displayDate(snapshot.nextDay.date))
                 } else {
                     views.setViewVisibility(R.id.current_now, android.view.View.GONE)
                     val configured = prefs.getString("latitude", null) != null
                     views.setTextViewText(R.id.current_temp, if (!configured) "Set location" else if (error) "Offline" else "Loading")
                     views.setTextViewText(R.id.current_daynight, "Day --°\nNight --°")
                     views.setTextViewText(R.id.current_wind, if (!configured) "Tap to configure" else "Weather unavailable")
-                    views.setTextViewText(R.id.current_gust, "")
+                    views.setTextViewText(R.id.current_weather_date, "")
                     views.setTextViewText(R.id.forecast_temp, "Day --°\nNight --°")
                     views.setTextViewText(R.id.forecast_wind, "-- mph --")
-                    views.setTextViewText(R.id.forecast_gust, "")
+                    views.setTextViewText(R.id.forecast_weather_date, "")
                 }
                 manager.updateAppWidget(id, views)
             }

@@ -10,8 +10,8 @@ android {
         applicationId = "uk.co.barnweatherclock"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "0.6"
+        versionCode = 3
+        versionName = "0.7"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

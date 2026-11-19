@@ -17,7 +17,7 @@
 | MANIFEST.md | v0.1/v0.2 | This file |
 | VERSION_HISTORY.md | v0.1/v0.2 | Version record |
 | `settings.gradle.kts` | v0.2 | New Android project file |
-| `.github/workflows/android-build.yml` | v0.8 | Builds debug APK on feature-branch pushes and uploads a 14-day workflow artifact |
+| `.github/workflows/android-build.yml` | v0.8 | Builds debug APK on feature-branch pushes and uploads a 14-day `barn-weather-clock-v0.9-debug` artifact |
 | `build.gradle.kts` | v0.2 | New Android project file |
 | `gradle.properties` | v0.2 | New Android project file |
 | `app/build.gradle.kts` | v0.2/v0.3/v0.4 | JVM targets 17; fused location dependency and app versionName 0.9 and versionCode 5 in BWC-CHG-012 |

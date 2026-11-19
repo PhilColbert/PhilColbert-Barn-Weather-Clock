@@ -66,6 +66,11 @@ class WidgetConfigActivity : Activity() {
             text = "Save settings"
             setOnClickListener { saveSettings() }
         })
+        root.addView(TextView(this).apply {
+            text = "Weather data provided by Open-Meteo"
+            textSize = 12f
+            setPadding(0, 12, 0, 0)
+        })
         setContentView(ScrollView(this).apply { addView(root) })
     }
 

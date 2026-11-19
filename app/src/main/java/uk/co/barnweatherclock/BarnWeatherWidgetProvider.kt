@@ -19,6 +19,20 @@ class BarnWeatherWidgetProvider : AppWidgetProvider() {
     }
     override fun onEnabled(context: Context) { scheduleRefresh(context) }
 
+    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+        val editor = context.getSharedPreferences("barn_weather", Context.MODE_PRIVATE).edit()
+        appWidgetIds.forEach { id ->
+            editor.remove("background_$id")
+            editor.remove("colour_index_$id")
+            editor.remove("transparency_$id")
+        }
+        editor.apply()
+    }
+
+    override fun onDisabled(context: Context) {
+        WorkManager.getInstance(context).cancelUniqueWork("barn-weather-refresh")
+    }
+
     companion object {
         fun scheduleRefresh(context: Context) {
             val request = PeriodicWorkRequestBuilder<WeatherWorker>(30, TimeUnit.MINUTES).build()
